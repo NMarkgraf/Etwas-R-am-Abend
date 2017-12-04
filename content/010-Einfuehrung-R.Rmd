@@ -1,0 +1,45 @@
+# Die Programmiersprache R
+
+## Was ist eigentlich R?
+
+**Programmiersprache S**:
+
+- Von Bell Labs für Statistik, Simulation, Grafik entwickelt (Becker and Chambers; 1984) 
+- kommerzielle Implementation: **S-PLUS** 
+    
+**Programmiersprache R**:
+
+- Implementation unter GPL (GNU General Public License), offener Quellcode
+    
+- **Vorteile:**
+    - interpretierter Programmcode, objektorientiert
+    - leicht erweiterbar durch eigene Routinen, Pakete, DLLs
+    - viele Grafikmöglichkeiten 
+    - standardisiertes, einfach handhabbares Datenformat (*data.frame*, neuer *tibbles*)
+    - gut durchdachtes Format zur Anpassung von (Regressions-)Modellen
+
+## Was ist eigentlich R?
+
+**Programmiersprache R**:
+
+- **Vorteile (Forts.):**
+    - aktive Entwicklergruppe, hilfreiche Mailingliste
+    - modularer Aufbau mit mehr als 10.000 Erweiterungspaketen
+    - man kann ansprechende Diagramme und interaktive Apps entwickeln (z.B. [plotly](https://plot.ly/r/), [shiny](http://shiny.rstudio.com)).
+    - führende Plattform für statistische Analysen
+
+
+-  **Nachteile:**
+    - bisher keine echte “Standard”-GUI (aber es gibt ja RStudio)
+    - verfügbare Routinen/Pakete manchmal unübersichtlich
+
+## Wer nutzt R im echten Leben?
+
+Unternehmen, die „ernsthaft“ Daten analysieren, setzen häufig auf R.
+
+![Wer nutzt R](images/WerNutztR.png)
+
+**Quelle:** http://www.revolutionanalytics.com/companies-using-r 
+
+
+Falls Sie gerne **Werbevideos** ansehen, hier ein Link [https://www.youtube.com/watch?v=TR2bHSJ_eck](https://www.youtube.com/watch?v=TR2bHSJ_eck)

@@ -1,0 +1,249 @@
+\ProvidesPackage{beamerthemeNPBT}[2017/06/28 v3.0 Main Beamer Theme of NPBT]
+% ===========================================================================
+% beamerthemeNPBT.sty
+% ===================---------------------------------------------------------
+% 
+% (C) in 2017 by Norman Markgraf (nmarkgraf(at)hotmail(dot)com)
+%
+% NPBT <-> Norman's Pandoc Beamer Theme -> NPBT 
+% ----     =        =      =      =
+%
+%
+% ---------------------------------------------------------------------------
+%
+\mode<presentation>
+% ---------------------------------------------------------------------------
+% Used Packages:
+% ---------------------------------------------------------------------------
+\RequirePackage{ifthen} 
+\RequirePackage{multicol} % Für das zweispaltige TOC.
+% ---------------------------------------------------------------------------
+
+\def\softness{0.8}
+
+\definecolor{softred}{rgb}{1,\softness,\softness}
+\definecolor{softgreen}{rgb}{\softness,1,\softness}
+\definecolor{softblue}{rgb}{\softness,\softness,1}
+% ---------------------------------------------------------------------------
+\definecolor{NPBTblue}{rgb}{0.77,0.58,0.75}
+\definecolor{NPBT}{rgb}{0,0.67,0.6}
+\definecolor{NPBTTitelColor}{RGB}{0,38,153}
+
+% ---------------------------------------------------------------------------
+\setbeamercolor*{structure}{fg=NPBTblue, bg=softblue}
+\setbeamercolor{structure}{fg=NPBT}
+
+% ---------------------------------------------------------------------------
+% title page
+% ---------------------------------------------------------------------------
+\setbeamercolor{title in titlepage}{fg=NPBTTitelColor}
+\setbeamercolor{institute in titlepage}{fg=lightgray}
+\setbeamercolor{author in titlepage}{fg=darkgray}
+
+% ---------------------------------------------------------------------------
+\setbeamerfont{title in titlepage}{size=\Large, series=\bfseries}
+\setbeamerfont{institute in titlepage}{size=\large, series=\bfseries}
+\setbeamerfont{author in titlepage}{series=\bfseries}
+
+% ---------------------------------------------------------------------------
+% part title page
+% ---------------------------------------------------------------------------
+\setbeamercolor{part title}{fg=NPBTTitelColor}
+
+% ---------------------------------------------------------------------------
+% section title page
+% ---------------------------------------------------------------------------
+\setbeamercolor{section name}{fg=NPBTTitelColor}
+\setbeamercolor{section title}{fg=NPBTTitelColor}
+
+% ---------------------------------------------------------------------------
+\setbeamerfont{section name}{size=\Large, family=\sffamily, series=\bfseries}
+
+% ---------------------------------------------------------------------------
+% subsection title page
+% ---------------------------------------------------------------------------
+\setbeamercolor{subsection name}{fg=NPBTTitelColor}
+\setbeamercolor{subsection title}{fg=NPBTTitelColor}
+
+% ---------------------------------------------------------------------------
+\setbeamerfont{subsection name}{size=\large, family=\sffamily, series=\bfseries}
+
+% ---------------------------------------------------------------------------
+% header
+% ---------------------------------------------------------------------------
+\setbeamercolor{myheader}{fg=darkgray}
+\setbeamercolor{section in head}{parent=myheader}
+\setbeamercolor{subsection in head}{parent=myheader}
+\setbeamercolor{frametitle in head}{parent=myheader, fg=NPBTTitelColor}
+
+% ---------------------------------------------------------------------------
+\setbeamerfont{myheader}{}
+\setbeamerfont{section in head}{parent=myheader}
+\setbeamerfont{subsection in head}{parent=myheader}
+\setbeamerfont{frametitle in head}{parent=myheader}
+
+% ---------------------------------------------------------------------------
+\setbeamercolor{footer}{fg=normal text.fg}
+\setbeamercolor{author in footer}{parent=footer}
+\setbeamercolor{date in footer}{parent=footer}
+\setbeamercolor{title in footer}{parent=footer}
+\setbeamercolor{framenumber in footer}{parent=footer}
+
+%
+% FIX ME!!!
+%
+\usetheme{Boadilla}
+
+\useinnertheme{rounded}
+
+%
+% FIX ME!!!
+%
+\setbeamertemplate{items}[triangle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{navigation symbols}{}
+
+% ---------------------------------------------------------------------------
+% Font setting
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+% Mathematische Formeln mit Serifen
+%
+\usefonttheme[onlymath]{serif}
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+% 
+\setbeamerfont{block title}{size={}}
+%\usepackage{eulervm}
+%\usepackage{dsfont}    		% Liefert $\mathds{N,Z,Q,R,C}$
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+% # Latin Modern
+% Die LaTeX Standardschrift ist die Latin Modern (lmodern Paket).
+% If Latin Modern is not available for your distribution you must install the
+% package cm-super instead. Otherwise your fonts will look horrible in the PDF
+%
+\usepackage{lmodern}
+%
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+%
+% needed for all T1 fonts!
+\usepackage[T1]{fontenc} 	% sonst wird OT1 coding ausgegeben 
+%							% und dann funktioniert Myriad (pmy) nicht mehr
+\usepackage{textcomp} 		% sonst wird OT1 coding ausgegeben 
+%							% und dann funktioniert Myriad (pmy) nicht mehr
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+%
+% ANDERE Fonttypen:
+%
+% # Schrifttype uarial, ein Arial clone:
+%\usepackage[scaled]{uarial}
+%
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+% # Palantino: Serifen für die Mathematischen Formeln (pplx, pplj)
+\usepackage[%
+  osf,
+  sc
+]{mathpazo} 
+%\renewcommand{\sfdefault}{pplx}
+%\renewcommand{\sfdefault}{pplj}
+%
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+% # Schrifttype eulervm / Euler Virtual Math
+%
+% URL: 
+% http://ftp.riken.jp/tex-archive/fonts/eulervm/doc/latex/eulervm/eulervm.pdf
+%  Zitat: Do not use the Euler math fonts in conjunction with the default 
+%         Computer Modern text fonts – this is ugly!
+\usepackage[                           %% --- EulerVM (MATH)
+    small,       %for smaller Fonts
+    OT1,
+%   euler-digits % digits in euler fonts style
+]{eulervm}
+% 
+%
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+%
+% Wissenswertes zum Thema Fonts:
+% URL:
+% http://www.matthiaspospiech.de/latex/vorlagen/allgemein/preambel/fonts/
+
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+% # Adobe Myriad  : Sans Serif (kostenpflichtiger Font!)
+%\renewcommand{\sfdefault}{pmy}
+%\renewcommand{\sfdefault}{pmyc} %% condensed Font
+%
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+% # Courier	(pcr)
+%\usepackage{courier}
+%\renewcommand{\sfdefault}{pcr}
+%
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+% Helvetica	(phv)
+%\usepackage{helvet}	phv
+%\renewcommand{\sfdefault}{phv}
+%
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+% CM Sans:
+% Diese Schrift wird automatisch geladen
+%\renewcommand{\sfdefault}{cmss}
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+%
+%
+%\DeclareSymbolFontAlphabet{\mathrm}    {operators}
+%\DeclareSymbolFontAlphabet{\mathnormal}{letters}
+%\DeclareSymbolFontAlphabet{\mathcal}   {symbols}
+%\DeclareMathAlphabet      {\mathbf}{OT1}{cmr}{bx}{n}
+%\DeclareMathAlphabet      {\mathsf}{OT1}{cmss}{m}{n}
+%\DeclareMathAlphabet      {\mathit}{OT1}{cmr}{m}{it}
+%\DeclareMathAlphabet      {\mathtt}{OT1}{cmtt}{m}{n}
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+%\DeclareSymbolFont{operators}   {OT1}{cmr} {m}{n}
+\DeclareSymbolFont{letters}     {OML}{zplm} {m}{it}
+%\DeclareSymbolFont{symbols}     {OMS}{cmsy}{m}{n}
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+%\usepackage{dsfont}    		% Liefert $\mathds{N,Z,Q,R,C}$
+%\renewcommand{\sfdefault}{phv}
+
+\setbeamerfont{frametitle}{shape=\upshape,family=\sffamily,series=\mdseries}
+
+% ---------------------------------------------------------------------------
+% eurosym für das Euro-Symbol
+% =======
+%
+% Als Option "official" für das "offizelle" Eurosymbol
+%
+%\usepackage[official]{eurosym}
+%
+\usepackage{eurosym}
+% Eurosymbol auch in mathematischen Formeln richtig darstellen
+%
+\DeclareRobustCommand{\officialeuro}{%
+  \ifmmode\expandafter\text\fi
+  {\fontencoding{U}\fontfamily{eurosym}\selectfont e}}
+%
+% \euro in UTF-8 als Standard-Eurozeichen definieren
+%
+\DeclareUnicodeCharacter{20AC}{\euro}
+% ---------------------------------------------------------------------------
+%running fraction with slash - requires math mode.
+\newcommand*\rfrac[2]{{}^{#1}\!/_{#2}}
+
+% ---------------------------------------------------------------------------
+
+\IfFileExists{mygeometry.tex}{%
+    \input{mygeometry.tex}
+	\InputIfFileExists{customize_geom.tex}{\relax}{\relax}
+}{% else
+    \relax
+}
+\IfFileExists{sections.tex}{%
+    \input{sections.tex}
+    \InputIfFileExists{customize_theme.tex}{\relax}{\relax}
+}{ % else
+    \relax
+}
+
+% ---------------------------------------------------------------------------
+\mode<all>
+%
+% ========================================================================
+%

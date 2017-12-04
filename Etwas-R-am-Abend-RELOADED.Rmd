@@ -1,0 +1,1194 @@
+---
+title: "Etwas R am Abend"
+author: "Norman Markgraf"
+date: "06.12.2017"
+institute: Standort Köln
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(
+    echo = TRUE,
+    background='#E0E0E0',
+#   fig.keep="none",
+    out.width="80%",
+#   cache = TRUE,
+#    tidy=TRUE,
+    fig.align = "center",
+    width.cutoff=60
+)
+options(width = 73)
+library(mosaic)
+library(tidyverse)
+library(formatR)
+library(mosaic)
+
+set.seed(2009)
+```
+
+```{r child = './content/010-Einfuehrung-R.Rmd'}
+```
+
+# Erste Schritte in R
+
+## Einfach nur R oder darf es etwas mehr sein?
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+**R** ist ein eine *komandozeilenorientierte*-Sprache!
+
+```{r, echo = TRUE}
+1+1
+```
+
+```{r, echo = TRUE}
+1+2*3^4
+```
+
+```{r, echo = TRUE}
+x <- 1; y <- 2
+x+y
+```
+:::
+::: {.column width="49%"}
+Die (recht schnell) schöne Ergebnisse produziert:
+```{r, echo=TRUE}
+x <- seq(-pi,pi,by=0.1)
+plot(x, sin(x),  type="l", col="red",
+     main="Sinuskurve")
+```
+:::
+::::::::::::::
+
+## Einfach nur R oder darf es etwas mehr sein?
+
+Natürlich können Sie **R** als Programmiersprache direkt von der Konsole aus füttern.
+
+Besser ist es aber seine Skripte vorab mit Hilfe eines Texteditors zu schreiben und **R** dieses ausführen zu lassen.
+
+Noch besser ist die Nutzung von Integrierten Entwicklungsumgebung (*IDE*), wie z.B. [RStudio](https://www.rstudio.com)
+
+**Meine Empfehlung:**
+
+- **R** (3.4.0) 
+    - **R** finden Sie hier: https://cran.rstudio.com oder https://www.r-project.org
+    - Aktuell ist die Version 3.4.0
+    - **Achtung MAC-Nuzter!!!**: Sie benötigen zusätzlich erst noch XQuartz. 
+        - XQuartz finden Sie hier: https://www.xquartz.org
+        
+- **RStudio** (Desktop-Version) (akt. Version: 1.0.143)
+    - Die aktuelle Version finden Sie hier: https://www.rstudio.com/products/rstudio/download/
+  
+(Un bitte, vergessen Sie den **R-CmdR**! )
+
+**Die Installation**
+
+- Die wichtigsten Schritte bei der Installation: 
+    - Abwarten und bestätigen ;-)
+
+## Die wichtigsten Pakete und wie man diese installiert
+
+Im Allgemeinen installiert man ein Paket `r '<blubber>'` durch den Befehl:
+```{r, eval=FALSE, echo=TRUE, tidy=TRUE}
+install.packages("<blubber>", dependencies=TRUE)
+```
+
+Für einen guten Start sollte man folgende Pakete installieren:
+
+- **tidyverse**  
+    
+    **tidyverse** ist eine Sammlung von Paketen, die einem den Umgang mit **R** erleichtern. 
+  
+    Das sind u.a. die Pakete:
+    
+    + [ggplot2](http://ggplot2.org)     # DAS Grafikpaket von *R*
+    + [dplyr](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)       # Das Paket zur Daten manipulation
+    + [readr](https://blog.rstudio.org/2016/08/05/readr-1-0-0/)       # Das Paket zum Einlesen von Daten 
+
+- **mosaic**
+    
+    Mehr Informationen zu **mosaic** finden Sie hier:
+    
+    + [Project MOSAIC](http://mosaic-web.org)
+    + [Less Volume, More Creativity – Getting Started with the mosaic Package](https://cran.r-project.org/web/packages/mosaic/vignettes/LessVolume-MoreCreativity.html)  
+
+  
+## Die wichtigsten Pakete und wie man diese installiert
+        
+Die ersten Befehle sollten wie folgt lauten:
+
+```{r, eval=FALSE, echo=TRUE}
+# Laden von tidyverse Paketen:
+install.packages("tidyverse", dependencies=TRUE) 
+# Laden des mosaic Pakets:
+install.packages("mosaic", dependencies=TRUE) 
+```
+
+Mit '#' leitet man einen Kommentar ein. Sie müssen aber die Beispiele nicht mit den Kommentaren eintippen, es reicht:
+```{r, eval=FALSE, echo=TRUE}
+install.packages("tidyverse", dependencies=TRUE) 
+install.packages("mosaic", dependencies=TRUE) 
+```
+
+Bitte bestätigen Sie alle Anfragen und haben Sie etwas Geduld. Es wird eine Menge nachgeladen. Aber nur einmal. Also keine Sorge!
+
+## Die ersten Schritte / **R** als Taschenrechner
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+# Punkt- vor Strichrechnung
+2 * 3 + 2 - 25/5 + 2^3
+```
+```{r}
+# Trigometrische Funktionen
+cos(pi/2)^2 + sin(pi/2)^2
+```
+```{r}
+# Logarithmen & Exponetialfunktion
+log(exp(3))
+```
+```{r}
+# Unendlich
+1/0
+```
+:::
+::: {.column width="49%"}
+```{r}
+# Not a Number (keine Zahl)
+0/0
+```
+```{r}
+# Not Available; ein fehleder Wert
+NA
+```
+```{r}
+# Vektoren (combine)
+c(1, 4:8)
+```
+```{r}
+# Vektor/Liste ohne Inhalt
+c()
+```
+:::
+::::::::::::::
+
+# Strukturen in R
+
+##  Variablen
+
+- Variablen in **R** können Skalare, Vektoren, Matrizen oder Objekte beliebiger anderer Klassen sein.
+- Man **erzeugt** eine Variable in dem man ihr mit Hilfe von "<-" oder "=" etwas **zuweist**.
+- **Variablennamen** können Kombinationen aus Buchstaben, Ziffern, Punkt und Unterstrich sein. Aber **keine Ziffern vorne**! 
+- **R** ist **case-sensetiv**, es unterscheidet zwischen Groß- und Kleinschreibung!
+
+```{r, eval=TRUE, echo=TRUE }
+a <- c("FOM", "und", "R", "sind", "SUPER")
+A <- 42
+a
+A
+```
+
+## Datentypen
+
+In **R** gibt es die Datentypen
+
+- **numeric** - ganzzahlige (*integer*) oder reelle (*double*) Zahlen
+- **character** - Zeichenketten
+- **logic** - die logischen Operatoren **TRUE** und **FALSE**
+- **list** - Liste von Objekten jeder Art (die wiederum Listen beinhalten können!)
+    
+Befehle zum überprüfen der Datentypen:
+
+```{r, eval=TRUE, echo=TRUE }
+mode(a)
+str(a)
+typeof(a)
+```
+
+
+## Vektoren
+
+Ein Vektor wird mit dem Befehl **c()** (für *combine*) erzeugt:
+
+```{r, eval=TRUE, echo=TRUE}
+a <- 5
+vektorMitBeliebigemNamen <- c(log(1), a, sqrt(16), 3^2)
+vektorMitBeliebigemNamen
+```
+
+R kann (Rechen-)Operationen auf ganzen Vektoren (elementweise) durchführen:
+
+```{r, eval=TRUE, echo=TRUE}
+vektorMitBeliebigemNamen * 2
+vektorMitBeliebigemNamen + 1
+```
+
+
+## Sequenzen
+
+Zahlensequenzen werden mit dem Befehl **seq()** erzeugt. Dem Befehl können verschiedene Argumente Übergeben werden:
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r, eval=TRUE, echo=TRUE}
+seq(from = 2, to = 9)
+seq(from = 2, to = 8, by=3)
+seq(from = 2, by = 0.5, length.out = 8)
+#'n:m' entspricht seq(from=n, to=m, by=1)
+vektor <- 1:4 
+vektor
+```
+:::
+::: {.column width="49%"}
+```{r, eval=TRUE, echo=TRUE}
+# Werte können mit rep() wiederholt werden:
+rep("X", times = 5)
+zahlen1 <- c(2, 4)
+zahlen1
+zahlen2 <- rep(zahlen1, times = 2)
+zahlen2
+rep(zahlen1, each = 2)
+```
+:::
+::::::::::::::
+## Logische Abfragen
+
+```{r, eval=TRUE, echo=TRUE}
+people <- c("Klaus", "Max", "Jens", "Dieter")
+people
+people == "Max"
+vektorMitBeliebigemNamen != 0
+logischerVektor <- vektorMitBeliebigemNamen <= 3
+logischerVektor
+```
+
+## Eigenschaften von Vektoren
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+**names(a)** gibt die Namen der Einträge des Vektors $a$ zurück:
+
+```{r, eval=TRUE, echo=TRUE}
+weight <- c(67, 80, 72, 90)
+names(weight)
+weight
+```
+Jetzt geben wir den Werten einen Namen:
+```{r}
+names(weight) <- people
+weight
+```
+:::
+::: {.column width="49%"}
+
+Diese Namen werden von **R** sehr oft mit ausgewertet und verwendert:
+
+```{r}
+barplot(weight)
+```
+
+:::
+::::::::::::::
+
+## Rechnen mit Vektoren/ Datenreihen
+
+In Vektoren speichern wir Datenreihen.
+
+**Wichtige** Befehle für Vektoren  sind 
+- $mean()$, $sd()$, $var()$, $min()$, $max()$, $length()$, $sum()$, $median()$, $IQR()$, $summary()$
+- **Zugriff** auf das i-te Element eines Vektors $a$ mit $a[i]$.
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+aVec <- c(1, 2, 4, 9, 16, 25) 
+mean(aVec)
+sd(aVec)
+var(aVec)
+```
+
+:::
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+min(aVec)
+max(aVec)
+length(aVec)
+sum(aVec)
+```
+:::
+::::::::::::::
+
+## Rechnen mit Vektoren
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+median(aVec)
+IQR(aVec)
+```
+
+:::
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+quantile(aVec)
+```
+
+:::
+::::::::::::::
+
+```{r, eval=TRUE, echo=TRUE}
+summary(aVec)
+```
+
+```{r}
+library(mosaic)
+favstats(aVec)
+```
+
+# Statistische Funktionen
+
+## Varianzen
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+**R** berechnet die Varianz von Daten mit Hilfe der (Schätzer-)Formel
+$$\frac1{n-1} \cdot \sum (x-\bar{x})^2,$$ 
+wie man leicht nachrechnen kann:
+
+```{r, eval=TRUE, echo=TRUE, tidy=TRUE}
+n <- length(aVec)
+var(aVec)
+# ist das selbe wie
+1/(n-1) * sum( (aVec-mean(aVec))^2 )
+# Dagegen ist
+1/n * sum( (aVec-mean(aVec))^2 )
+```
+
+:::
+::: {.column width="49%"}
+
+Die Standardabweichung ist die Quadratwurzel der Varianz:
+```{r, eval=TRUE, echo=TRUE}
+sd(aVec)
+sqrt(var(aVec))
+```
+
+:::
+::::::::::::::
+
+## Varianz einer Population
+
+Will man die Varianz und die Standardabweichung mit Hilfe der Formel
+$$\frac1{n} \cdot \sum (x-\bar{x})^2,$$ 
+berechnen, so muss man in **R** etwas tun:
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE, tidy=TRUE}
+n <- length(aVec)
+factor <-(n-1)/(n) 
+# Wert
+var(aVec)
+# Korrigierter Wert
+factor*var(aVec)
+# Zur Probe:
+1/n * sum( (aVec-mean(aVec))^2 )
+```
+
+:::
+::: {.column width="49%"}
+
+```{r}
+factorSD <-sqrt((n-1)/n) 
+# Wert von R:
+sd(aVec)
+# Korrigierter Wert
+factor*sd(aVec)
+# Zur Probe
+sqrt(1/n * sum( (aVec-mean(aVec))^2 ))
+```
+
+:::
+::::::::::::::
+
+## Rechnen mit Vektoren
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r}
+aVec2 <- rep(2, 6)
+aVec
+aVec2
+# Skalarprodukt
+aVec %*% aVec2
+# Komponentenweises *
+aVec * aVec2
+```
+
+:::
+::: {.column width="49%"}
+
+```{r}
+aVec3 <- aVec[2:5]
+aVec3
+aVec3[3]
+aVec3[3] <- NA
+aVec3
+mean(aVec3)
+# NA ignorieren:
+mean(aVec3, na.rm = TRUE)
+```
+
+:::
+::::::::::::::
+
+## Dataframes
+
+Merkmale eines Markmalsträgers fasst man gelegendlich zu Tabellen zusammen. 
+In **R** kann man dazu *data frames* nutzen:
+
+```{r}
+# Die Datenreihen
+Name <- c("Anna", "Beria", "Carlo", "Edda")
+Geschlecht <- c("weiblich", "weiblich", "männlich", "weiblich")
+Größe <- c(1.60, 1.68, 1.81, 1.71)
+Gewicht <- c(52, 60, 80, 70)
+```
+
+Diese Datenreihen kann man wie folgt zu einem Objekt zusammenfassen:
+
+```{r}
+# Als Dataframe:
+df <- data.frame(
+    Name = Name, 
+    Geschlecht = Geschlecht, 
+    Größe = Größe, 
+    Gewicht = Gewicht)
+#
+```
+
+
+## Ausgabe von Dataframes  als Tabellen
+
+```{r}
+df
+```
+
+```{r}
+library(knitr)
+kable(df)
+```
+
+## Arbeiten mit Dataframes
+
+```{r}
+# Ausgabe der Durchschnittsgröße:
+mean(df$Größe)
+# Ausgabe des Durchschnittsgewichts:
+mean(df$Gewicht)
+
+library(dplyr) 
+# Nur die Damen
+mean(filter(df, Geschlecht=="weiblich")$Größe)
+# Nur die Herren
+mean(filter(df, Geschlecht=="männlich")$Gewicht)
+
+```
+
+## Arbeiten mit Dataframes
+
+```{r, tidy=TRUE}
+# BMI der Tabelle hinzufügen:
+df <- mutate(df, BMI = round(Gewicht / Größe^2,2))
+df
+```
+
+<div class="columns">
+<div class="column" width="49%">
+
+```{r}
+# Nur das Geschlecht und den BMI ausgeben
+kable(select(df, Geschlecht, BMI))
+
+```
+
+</div>
+<div class="column" width="49%">
+
+```{r}
+# Der Größe nach sortieren (absteigend)
+kable(arrange(select(df, Name, Größe),
+              -Größe))
+```
+</div>
+</div>
+
+# R intern
+
+## Der Arbeitsbereich in R
+
+Der *Arbeitsbereich* (**workspace**) in **R** ist eine Sammlung von Objekten, die aktuell im Speicher vorhanden ist.
+
+Sie können diese Objekte anzeigen mit dem Befehl:
+```{r, eval=FALSE, echo=TRUE}
+ls()
+```
+
+Löschen können sie die Objekte mit
+```{r, eval=FALSE, echo=TRUE}
+rm()
+```
+
+## Pakete
+
+* **R** ist ein **Paketen** organisiert.
+* Ein *Paket* ist eine kompakte Zusammenfassung von Code, Hilfeseiten, Daten, Beispielen usw. zu einem bestimmten Themengebiet.
+* **R** wächst durch ständig neue Pakete!
+* Mit der Installation von **R** haben Sie eine Grundausstattung an wichtigen Paketen, welche Sie nach belieben erweitern können und sollten!
+* Die wichtigsten Pakete gibt es beim [*C*omprehensive *R* *A*rchive *N*etwork](http://cran.r-project.org) kurz **CRAN**.
+
+## Pakete installieren / aktualisieren
+
+Um ein Paket, zum Beispiel **ggplot2**, zu installieren benutz man den Befehl:
+```{r, eval=FALSE, echo=TRUE}
+install.packages("ggplot2")
+```
+
+Um gleichzeitig weitere, notwendige Pakete zu installieren nutzt man die Option "dependencies=TRUE":
+```{r, eval=FALSE, echo=TRUE}
+install.packages("ggplot2", dependencies=TRUE)
+```
+
+Es gibt aber noch andere Wege! (Direkt in RStudio z.B.!)
+
+**Aktualisieren von (allen) Paketen:**
+
+```{r, eval=FALSE, echo=TRUE}
+update.packages()
+```
+
+## Pakete benutzen
+
+- Mit dem Befehl **library()** (ohne Argument) werden alle bereits installierten Pakete aufgelistet.
+    Nicht alle davon sind automatisch verfügbar, sondern müssen erst geladen werden
+```{r, eval=FALSE, echo=TRUE}
+library(ggplot2)
+```
+
+- Liegt das Paket nicht im Standard-library-Verzeichnis, benutzt man die Option **lib.loc=**:
+```{r, eval=FALSE, echo=TRUE}
+library(ggplot2, lib.loc= <Verzeichnis> )
+```
+
+- Alternativ können Pakete auch mit **require()** geladen werden. Diese Funktion liefert als Rückgabe die Information ob das Paket verfügbar ist oder nicht.
+
+```{r, eval=FALSE, echo=TRUE}
+require(ggplot2)
+[1] TRUE
+```
+
+## Verwaltung von Paketen
+
+
+
+## Literaturtips
+
+Wenn Sie sich mehr für **R** interessieren. Ein erster Anlaufpunkt wäre z.B. das Skript "Praxis der Datenanalyse" von 
+
+https://sebastiansauer.github.io/Praxis_der_Datenanalyse/
+
+Sauer, S., Gansser, O. (2017). Praxis der Datenanalyse. Skript zum Modul im MSc.-Studiengang “Wirtschaftspsychologie & Consulting” an der FOM. FOM Nürnberg. DOI: 10.5281/zenodo.580649.
+
+Ein gutes Werk in englischer Sprache finden Sie hier:
+
+http://r4ds.had.co.nz/
+
+Garrett Grolemund und Hadley Wickham. R for Data Science.Published by O’Reilly January 2017 First Edition.
+
+
+## Wir laden ein paar Daten
+
+- Via **RStudio**:
+    Gehen Sie auf das recht obere Fenster und klicken Sie **Import Dataset**, danach **From Web URL** und geben Sie 
+    als URL bitte https://raw.githubusercontent.com/NMarkgraf/Etwas-R-zum-Nachmittag/master/Datasets/miete03.asc ein.
+    
+    Beachten 
+    
+- Via **R** direkt:
+  Man kann auch direkt aus **R** mittels ein paar Zeilen die Daten laden!
+  Laden wir ein paar Demodaten aus dem Netz:
+```{r, eval=TRUE, echo=TRUE}
+path <- paste0("https://raw.githubusercontent.com/NMarkgraf/",
+               "Etwas-R-zum-Nachmittag/master/Datasets/miete03.asc")
+miete03 <- read.table(file = path, header = TRUE)
+```
+
+
+## Die ersten Zeilen der Tabelle ansehen
+
+Mit dem Befehl **head()** schaut man sich die ersten Zeilen (im Bsp. die ersten 4 Zeilen) eines *Dataframes* an:
+```{r,  eval=TRUE, echo=TRUE}
+head(miete03, 4)
+```
+
+
+## Die letzten Zeilen der Tabelle ansehen
+
+Mit dem Befehl **tail()** schaut man sich die ersten Zeilen (im Bsp. die letzen 3 Zeilen) eines *Dataframes* an:
+```{r,  eval=TRUE, echo=TRUE}
+tail(miete03, 3)
+```
+
+## Häufigkeitstabelle und Balkendiagramme
+
+Mit dem Befehl **table** können wir eine *Häufigkeitstabelle* erstellen:
+```{r,  eval=TRUE, echo=TRUE, tidy=TRUE}
+table(miete03$rooms)
+```
+
+Alternativ gibt es im Paket *mosaic* den Befehl *tally*:
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+Absolute Häufigkeitstabelle
+```{r}
+library(mosaic)
+tally( ~ rooms, data=miete03, 
+       format="count")
+```
+
+:::
+::: {.column width="49%"}
+
+Relative Häufigkeitstabelle
+```{r}
+library(mosaic)
+options(digits=1)
+tally( ~ rooms, data=miete03, 
+       format="proportion")
+```
+```{r echo=FALSE}
+options(digits=6)
+```
+
+:::
+::::::::::::::
+
+## Häufigkeitstabelle und Balkendiagramme
+
+Und mit dem Befehl **barplot()** erstellen wir ein Balkendiagramm daraus:
+```{r,  eval=TRUE, echo=TRUE, tidy=TRUE}
+barplot( table(miete03$rooms) )
+```
+
+## Schönere Diagramme mit **ggplot2** und **qplot()**
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(ggplot2)
+qplot(miete03$rooms, bins=12,
+      xlab="Zimmer", ylab="Häufigkeit")
+
+```
+
+:::
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(ggplot2)
+ggplot(miete03, aes( x = rooms)) + 
+    geom_bar() + xlab("Zimmer") + 
+    ylab("Häufigkeit")
+```
+
+:::
+::::::::::::::
+
+Wie man mit **ggplot2** noch mehr und noch schönere Grafiken erstellt, können Sie finden bei:
+
+- http://ggplot2.org
+- http://docs.ggplot2.org/current/index.html
+- http://www.cookbook-r.com/Graphs/
+- https://www.datacamp.com/courses/data-visualization-with-ggplot2-1
+- http://r4ds.had.co.nz
+
+## Mehr Informationen zu **R**
+
+Hier finden Sie Videos, die einige Schritte der Datenaufbereitung und deskriptiver/ explorativer Datenanalyse erläutern (zumeist mit R-Commander):
+
+- boxplots erstellen https://www.youtube.com/watch?v=9XBjOmA7sNs
+- Textdatei öffnen https://www.youtube.com/watch?v=QnM9HBe23Y8
+- Öffnen der Datei Polizeistudie https://www.youtube.com/watch?v=SDOoKuj5_7o
+- SPSS Datei importieren https://www.youtube.com/watch?v=HS8H_n7Vrm0
+- Deskriptive Statistik erstellen https://www.youtube.com/watch?v=qrMpgk-7Wus
+- Variablen in Faktoren umwandeln und Balkendiagramm https://www.youtube.com/watch?v=PRR-3kblt8k
+- Streudiagramm https://www.youtube.com/watch?v=brE72_0stO0
+- Korrelationsmatrix https://www.youtube.com/watch?v=pl92q_S-r8E
+- Datenmatrix erstellen https://youtu.be/-EaeBL9J4IE
+
+Die Videos wurden von Frau Prof. Ferreira erstellt. 
+
+## Eine kurze Datenanalyse
+
+Im Folgenden kann man ein paar der Möglichkeiten von **R** finden, wie man sie in Vorlesungen braucht.
+
+Dazu nehmen wir die Daten *tips* aus dem Unterrichtsmaterialsammlung von **Prof. Dr. Sebastian Sauer**.
+
+https://github.com/sebastiansauer/Daten_Unterricht 
+
+```{r, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE}
+library(readr)
+path <- paste0("https://raw.githubusercontent.com/sebastiansauer/",
+               "Daten_Unterricht/master/tips.csv")
+tips <- read_csv(file=path)
+tips$X1 <- NULL
+```
+
+Darüberhinaus nutzen wir einige Befehle aus der Paketsammlung **Mosaic**, welches wir dazu laden
+```{r}
+library(mosaic) # Hauptsächlich "lattice"
+```
+
+## Daten ansehen
+
+Schauen wir uns die Daten etwas an:
+
+```{r, tidy=TRUE, size='tiny', tidy.opts=list(blank=FALSE, width.cutoff=60)}
+glimpse(tips)
+```
+
+Dimension des Datensatzes:
+```{r}
+dim(tips)
+```
+
+
+
+## Balkendiagramm bei kategorialen Daten
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(lattice)
+bargraph(~sex, data=tips)
+```
+
+:::
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(ggplot2)
+qplot(sex, data=tips)
+```
+
+:::
+::::::::::::::
+
+## Histogramm bei metrischen Daten
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(lattice)
+histogram(~tip, data=tips)
+```
+
+:::
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(ggplot2)
+qplot(tip, data=tips, binwidth=1)
+```
+
+:::
+::::::::::::::
+
+## Histogramm bei metrischen Daten, facettiert
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(lattice)
+#
+histogram(~tip | sex, data=tips)
+```
+
+:::
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(ggplot2)
+qplot(tip, facets = ~sex, data=tips, 
+      binwidth=1, geom="histogram")
+```
+
+:::
+::::::::::::::
+
+## Boxplots bei metrischen Daten
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(lattice)
+#
+bwplot(~tip, data=tips)
+```
+
+:::
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(ggplot2)
+qplot(x=1, y=tip, data=tips, 
+      geom="boxplot")
+```
+
+:::
+::::::::::::::
+
+
+## Boxplot mit metrischen Daten für Gruppem
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(lattice)
+#
+bwplot(tip ~ sex, data=tips)
+```
+
+:::
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(ggplot2)
+qplot(x=sex, y=tip, data=tips, 
+     geom="boxplot")
+```
+
+:::
+::::::::::::::
+
+## Boxplot mit metrischen Daten für Gruppen, facettiert 
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(lattice)
+#
+bwplot(tip ~ sex | smoker, 
+       data=tips)
+```
+
+:::
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(ggplot2)
+qplot(x=sex, y=tip, data=tips, 
+      facets=~smoker,
+      geom="boxplot")
+```
+
+:::
+::::::::::::::
+
+## Streudiagramm mit zwei metrischen Variablen
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(lattice)
+xyplot(tip~total_bill, 
+       data=tips)
+```
+
+:::
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(ggplot2)
+qplot(total_bill, tip,
+      data=tips)
+```
+
+:::
+::::::::::::::
+
+
+## Häufigkeitstabellen zwei kategorialen Variablen
+
+Dazu generieren wir die Häufigkeitstabelle mit dem Befehl *tally* und speichern sie in *tab*
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, tidy=TRUE,}
+library(mosaic)
+tab <-tally(sex ~ smoker, data=tips)
+tab
+```
+
+:::
+::: {.column width="49%"}
+
+```{r eval=FALSE}
+library(knitr)
+kable(tab, 
+  col.names=c("N.-Raucher", "Raucher"))
+```
+```{r echo=FALSE}
+if (knitr:::is_latex_output()) {
+kable(tab, format="latex",
+      col.names=c("N.-Raucher", "Raucher")
+      )
+} else {
+    kable(tab, 
+      col.names=c("N.-Raucher", "Raucher"))
+}
+```
+
+:::
+::::::::::::::
+
+Eine Variante mit relativen Häufigkeiten erhält man mit:
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+tally(sex ~ smoker, data=tips,
+      format="proportion")
+```
+
+:::
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+tally(sex ~ smoker, data=tips,
+      format="percent")
+```
+
+:::
+::::::::::::::
+
+
+
+## mosaicplot mit zwei kategorialen Variablen
+
+
+Mit der Tabelle *tab*  kann nun ein mosaic plot generiert werden:
+
+```{r, tidy=TRUE}
+mosaicplot(tab)
+```
+
+## Korrelationsplot mit metrischen Variablen
+
+```{r, tidy=TRUE}
+# ggf:  install.packages("corrgram", dependencies=T)
+library(corrgram)
+corrgram(tips)
+```
+
+## Kennzahlen
+
+Mittelwert
+```{r, tidy=TRUE}
+mean(tip~sex, data=tips)
+```
+
+Anstatt *mean* können alle Lageparameter und Streumaße errechnet werden (min, max, median, sd, var):
+```{r, tidy=TRUE,}
+favstats(tip~sex, data=tips)
+```
+
+Korrelation als Zusammenhangsmaß mit metrischen Variablen
+```{r, tidy=TRUE,}
+cor(tip~total_bill, data=tips)
+```
+
+## $\chi^2$-Test
+Test der Unabhängigkeit geht nur mit zwei nominalen Variablen. In *tab* haben wir solche schon generiert.
+
+`r if (knitr:::is_latex_output()) '\n\\smallverb'`
+```{r, tidy=TRUE,}
+xchisq.test(tab)
+```
+
+## t-Test für abhängige Stichproben (Differenzentest)
+
+Variablen müssen beide metrische sein und zwischen beiden Variablen wird eine Differenz gebildet.
+
+Die Forschungsfrage lautet meist:
+
+ - V1 unterscheidet sich von V2 (ungerichtet)
+ - V1>V2 (gerichtet)
+ - V2>V1 (gerichtet)
+
+```{r, tidy=TRUE,}
+t.test(~(tip-total_bill), data=tips)
+```
+## t-Test für abhängige Stichproben (Differenzentest) 
+
+Wenn die Forschungshypothese (Alternativhypothese) gerichtet ist, und
+V1-V2 < 0 ist, dann wird das Argument alternative="less" hinzugefügt,
+wenn V1-V2 > 0, dann "greater".
+
+```{r, tidy=TRUE,}
+t.test(~(tip-total_bill), alternative="less", data=tips)
+```
+
+**Achtung:**
+Bei der Dokumentation von t-Tests ist es wichtig, einseitiges Testen von zweiseitigem Testen zu unterscheiden (einseitig/zweiseitig).
+
+
+## ANOVA (Varianzanalyse)
+
+Bezüglich einer Gruppe (nominale Variable) mit mehr als zwei Levels wird eine metrische Variable getestet.
+
+```{r, tidy=TRUE,}
+bwplot(tip~day, data=tips)
+```
+
+
+## ANOVA (Varianzanalyse)
+
+```{r, tidy=TRUE,}
+favstats(tip~day, data=tips)
+```
+
+*Forschungshypothese:* Es gibt einen Unterschied beim Trinkgeld bei/zwischen den Tagen.
+
+```{r, tidy=TRUE,}
+summary(aov(tip~day, data=tips))
+```
+
+
+## Lineare Einfachregression mit metrischer Variable.
+
+Modellierung einer angängigen Variable (AV) durch eine unabhängige Variable (UV).
+`r if (knitr:::is_latex_output()) '\n\\smallverb'`
+```{r, tidy=TRUE,}
+Mod1<-lm(tip~total_bill, data=tips)
+summary(Mod1)
+```
+
+## Lineare Einfachregression mit kategorialer UV
+
+**Achtung:** Das nicht ausgegebene Level in der Ausgabe ist das Referenzlevel.
+`r if (knitr:::is_latex_output()) '\n\\smallverb'`
+```{r, tidy=TRUE, size="small", highlight=TRUE}
+Mod2<-lm(tip~day, data=tips)
+summary(Mod2)
+```
+
+## Multiple Regression
+```{r, tidy=TRUE, size='tiny', tidy.opts=list(blank=FALSE, width.cutoff=75), eval=FALSE}
+Mod3<-lm(tip~total_bill + sex + smoker + day + time + size, data=tips)
+summary(Mod3)
+```
+```{r, echo=FALSE, tidy=TRUE, size='tiny', tidy.opts=list(blank=FALSE, width.cutoff=55), }
+Mod3<-lm(tip~total_bill + sex + smoker + day + time + 
+         size, data=tips)
+txt <- capture.output(summary(Mod3))
+splitat <- 25
+library(stringi)
+```
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+\scriptsize\ttfamily
+\begin{verbatim}
+`r paste0(stri_wrap(txt[1:splitat], width=55, normalize=FALSE), collapse="\n## ")`
+\end{verbatim}
+
+:::
+::: {.column width="49%"}
+
+\scriptsize\ttfamily
+\begin{verbatim}
+`r paste0(stri_wrap(c("",txt[-(1:splitat)]), width=55, normalize=FALSE), collapse="\n## ")`
+\end{verbatim}
+\normalsize
+
+:::
+::::::::::::::
+
+## Der Befehl *step*
+
+Mit dem Befehl *step* führt man eine stufenweise Regressionsanalyse durch,
+bei der die Variablen nach der Reihenfolge ihrer Wichtigkeit entfernt werden.
+
+```{r, eval=FALSE}
+step(Mod3)
+```
+```{r, echo=FALSE}
+txt <- capture.output(step(Mod3))
+splitat <- 29
+```
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+\scriptsize\ttfamily
+\begin{verbatim}
+`r paste0(stri_wrap(c("",txt[1:splitat]), width=55, normalize=FALSE), collapse="\n## ")`
+\end{verbatim}
+
+:::
+::: {.column width="49%"}
+
+\scriptsize\ttfamily
+\begin{verbatim}
+`r paste0(stri_wrap(c("",txt[-(1:splitat)]), width=55, normalize=FALSE), collapse="\n## ")`
+\end{verbatim}
+\normalsize
+
+:::
+::::::::::::::
+
+## Wie geht es weiter?
+
+Dieses kleine Kick-Off für **R** ist natürlich nicht vollständig. - Wo es, aus meiner persönlichen Sicht, lohnt weiter zu schauen sind die folgenden Themen:
+
+* **Grammar of Graphic** und **ggplot2** für schönere und aussagekräftige Grafiken in **R**.
+* *tidyr*, [dplyr](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)  und Co, die Welt des Datenmanagement in **R**
+* [*rmarkdown*](http://rmarkdown.rstudio.com) und der Weg zu eigenen Dokumenten 
+* [*Shiny*](http://shiny.rstudio.com) und die interaktive Webdarstellung von Statistiken 
+* *mosaic* 
+
+## Quellen
+
+Ein großer Teil der Beispiele stammt von **Prof. Dr. Oliver Gansser** aus seinem Handout *"Wichtige Befehle in R - Datenerhebung und Statistik"* vom 15. Dezember 2016, welches mir von **Prod. Dr. Joachim Schwarz** freundlicherweise überlassen wurde.
+
+Die Übersicht der Videos und viele andere Links entstammen dem Skript "Datenerhebung und Statistik" von **Prof. Dr. Sebastian Sauer**.
+
+Diese Präsentation wurde mit **RMarkdown** und ein paar kleinen Helferlein (**NPFC**) erstellt.
+
+Sie finden die (tages-)aktuelle Version inklusive der Quellen unter:
+
+https://github.com/NMarkgraf/Etwas-R-am-Abend
+
+Erstellt wurde dieses Dokument mit **R** (Version `r getRversion()`) und  RStudio (1.0.143) am `r format(Sys.time(), "%d. %b %Y")` 
+
