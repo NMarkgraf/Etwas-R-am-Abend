@@ -107,7 +107,7 @@ In **R** kann man dazu *data frames* nutzen:
 # Die Datenreihen
 Name <- c("Anna", "Beria", "Carlo", "Edda")
 Geschlecht <- c("weiblich", "weiblich", "männlich", "weiblich")
-Größe <- c(1.60, 1.68, 1.81, 1.71)
+Groesse <- c(1.60, 1.68, 1.81, 1.71)
 Gewicht <- c(52, 60, 80, 70)
 ```
 
@@ -118,7 +118,7 @@ Diese Datenreihen kann man wie folgt zu einem Objekt zusammenfassen:
 df <- data.frame(
     Name = Name, 
     Geschlecht = Geschlecht, 
-    Größe = Größe, 
+    Groesse = Groesse, 
     Gewicht = Gewicht)
 #
 ```
@@ -139,13 +139,13 @@ kable(df)
 
 ```{r}
 # Ausgabe der Durchschnittsgröße:
-mean(df$Größe)
+mean(df$Groesse)
 # Ausgabe des Durchschnittsgewichts:
 mean(df$Gewicht)
 
 library(dplyr) 
 # Nur die Damen
-mean(filter(df, Geschlecht=="weiblich")$Größe)
+mean(filter(df, Geschlecht=="weiblich")$Groesse)
 # Nur die Herren
 mean(filter(df, Geschlecht=="männlich")$Gewicht)
 
@@ -153,28 +153,47 @@ mean(filter(df, Geschlecht=="männlich")$Gewicht)
 
 ## Arbeiten mit Dataframes
 
+<div class="columns">
+<div class="column" width="59%">
+
 ```{r, tidy=TRUE}
 # BMI der Tabelle hinzufügen:
-df <- mutate(df, BMI = round(Gewicht / Größe^2,2))
+df <- mutate(df, BMI = round(Gewicht / Groesse^2,2))
 df
 ```
+
+</div>
+<div class="column" width="39%">
+
+```{r}
+# Nur das Geschlecht und den
+# BMI ausgwählen:
+df2 <- select(df, 
+    c(Geschlecht, BMI))
+```
+
+</div>
+</div>
+
+.
 
 <div class="columns">
 <div class="column" width="49%">
 
 ```{r}
-# Nur das Geschlecht und den BMI ausgeben
-kable(select(df, Geschlecht, BMI))
-
+# Nur das Geschlecht und 
+# den BMI ausgeben
+kable(df2)
 ```
 
 </div>
 <div class="column" width="49%">
 
-```{r}
+```{r tidy=TRUE, echo=TRUE}
 # Der Größe nach sortieren (absteigend)
-kable(arrange(select(df, Name, Größe),
-              -Größe))
+df3 <- arrange(df2, desc(Groesse)) 
+kable(df3)
 ```
+
 </div>
 </div>

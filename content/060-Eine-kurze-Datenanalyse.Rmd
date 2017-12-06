@@ -30,7 +30,7 @@ library(mosaic) # Hauptsächlich "lattice"
 
 Schauen wir uns die Daten etwas an:
 
-```{r, tidy=TRUE, size='tiny', tidy.opts=list(blank=FALSE, width.cutoff=60)}
+```{r, tidy=TRUE, size='tiny', tidy.opts=list(blank=FALSE, width.cutoff=78)}
 inspect(tips)
 ```
 
@@ -42,6 +42,13 @@ Umwandeln der Tischgröße in eine kategoriale Variable:
 levels(tips$size)
 tips$size <- as.factor(tips$size)
 levels(tips$size) 
+```
+
+## Daten erneut ansehen
+
+Schauen wir uns die Daten erneut an:
+
+```{r, tidy=TRUE, size='tiny', tidy.opts=list(blank=FALSE, width.cutoff=78)}
 inspect(tips)
 ```
 
@@ -76,7 +83,7 @@ histogram(~tip, data=tips)
 ::: {.column width="49%"}
 
 ```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
-histogram(~total_bill, data=tips)
+histogram( ~ total_bill, data=tips)
 ```
 
 :::
@@ -87,15 +94,17 @@ histogram(~total_bill, data=tips)
 :::::::::::::: {.columns} 
 ::: {.column width="49%"}
 
-```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
-histogram(~tip | sex, data=tips)
+```{r, eval=TRUE, echo=TRUE}
+histogram( ~ tip | sex, 
+          data=tips)
 ```
 
 :::
 ::: {.column width="49%"}
 
 ```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
-histogram(~total_bill | size, data=tips)
+histogram( ~ total_bill | size, 
+          data=tips)
 ```
 
 :::
@@ -106,14 +115,14 @@ histogram(~total_bill | size, data=tips)
 :::::::::::::: {.columns} 
 ::: {.column width="49%"}
 
-```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
-bwplot(~tip, data=tips)
+```{r, eval=TRUE, echo=TRUE}
+bwplot( ~ tip, data=tips)
 ```
 
 :::
 ::: {.column width="49%"}
 
-```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
+```{r, eval=TRUE, echo=TRUE}
 bwplot(total_bill ~ size, data=tips)
 ```
 
@@ -129,13 +138,16 @@ bwplot(total_bill ~ size, data=tips)
 ```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
 bwplot(tip ~ sex | smoker, 
        data=tips)
+#
 ```
 
 :::
 ::: {.column width="49%"}
 
 ```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
-bwplot(tip ~ sex | smoker, data=tips, main="Trinkgeld nach Rauchern und Geschlecht", ylab="Trinkgeld")
+bwplot(tip ~ sex | smoker, data=tips, 
+    main="Trinkgeld nach Rauchern und Geschlecht", 
+    ylab="Trinkgeld")
 ```
 
 :::
@@ -144,15 +156,21 @@ bwplot(tip ~ sex | smoker, data=tips, main="Trinkgeld nach Rauchern und Geschlec
 ## Streudiagramm mit zwei metrischen Variablen
 
 
-```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
-xyplot(tip~total_bill, data=tips, ylab="Trinkgeld (in USD)", xlab="Rechnungsbetrag (in USD)", main="Trinkgelder in Abhängigkeit vom Rechnungsbetrag")
+```{r, tidy=TRUE, eval=TRUE, echo=TRUE, fig.height="90%}
+xyplot(tip~total_bill, data=tips, 
+       ylab="Trinkgeld (in USD)", xlab="Rechnungsbetrag (in USD)", 
+       main="Trinkgelder in Abhängigkeit vom Rechnungsbetrag")
 ```
 
 ## Streudiagramm mit zwei metrischen Variablen
 
 
-```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
-xyplot(tip~total_bill, data=tips, ylab="Trinkgeld (in USD)", xlab="Rechnungsbetrag (in USD)", main="Trinkgelder in Abhängigkeit vom Rechnungsbetrag", sub="Daten gruppiert nach dem Geschlecht", groups=sex, auto.key = T)
+```{r, tidy=TRUE, eval=TRUE, echo=TRUEfig.height="75%"}
+xyplot(tip~total_bill, data=tips, 
+       ylab="Trinkgeld (in USD)", xlab="Rechnungsbetrag (in USD)", 
+       main="Trinkgelder in Abhängigkeit vom Rechnungsbetrag", 
+       sub="Daten gruppiert nach dem Geschlecht", 
+       groups=sex, auto.key = T)
 ```
 
 ## Häufigkeitstabellen zwei kategorialen Variablen
@@ -170,7 +188,7 @@ tab
 :::
 ::: {.column width="49%"}
 
-```{r tidy=TRUE, eval=FALSE}
+```{r eval=FALSE}
 library(knitr)
 kable(tab, 
   col.names=c("N.-Raucher", "Raucher"))
@@ -247,11 +265,11 @@ cor(tip~total_bill, data=tips)
 ```
 
 ## $\chi^2$-Test
-Test der Unabhängigkeit geht nur mit zwei nominalen Variablen. In *tab* haben wir solche schon generiert.
+Test der Unabhängigkeit zweier nominalen Variablen mit Hilfe des $\chi^2$-Test:
 
 `r if (knitr:::is_latex_output()) '\n\\smallverb'`
 ```{r, tidy=TRUE,}
-xchisq.test(tab)
+xchisq.test(sex ~ smoker, data=tips)
 ```
 
 ## Nullhypotesten-Tests
@@ -268,7 +286,7 @@ Die Forschungsfrage lautet meist:
  - V2>V1 (gerichtet)
 
 ```{r, tidy=TRUE,}
-t.test(~(tip-total_bill), data=tips)
+t.test( ~ (tip-total_bill), data=tips)
 ```
 ## t-Test für abhängige Stichproben (Differenzentest) 
 
@@ -277,7 +295,7 @@ V1-V2 < 0 ist, dann wird das Argument alternative="less" hinzugefügt,
 wenn V1-V2 > 0, dann "greater".
 
 ```{r, tidy=TRUE,}
-t.test(~(tip-total_bill), alternative="less", data=tips)
+t.test( ~ (tip-total_bill), alternative="less", data=tips)
 ```
 
 **Achtung:**

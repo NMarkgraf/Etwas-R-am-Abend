@@ -3,14 +3,14 @@
 ## Was ist eigentlich R?
 
 **Programmiersprache S**:
-\small
+\footnotesize
 
 - Von Bell Labs für Statistik, Simulation, Grafik entwickelt (Becker and Chambers; 1984) 
 - kommerzielle Implementation: **S-PLUS** 
 \normalsize
 
 **Programmiersprache R**:
-\small
+\footnotesize
 
 - Implementation unter GPL (GNU General Public License), offener Quellcode
 
@@ -19,7 +19,8 @@
 
 :::::::::::::: {.columns}
 ::: {.column width="49%"}
-\small
+\footnotesize
+
 - Frei und Offen; Kostenlos
 - Numerische Stabilität/ Genauigkeit
 - Methoden- und Anwendungsvielfalt (Finance, Marketing, HR, Psychologie, ...)
@@ -28,7 +29,8 @@
 - Gut durchdachtes Format zur Anpassung von (Regressions-)Modellen
 :::
 ::: {.column width="49%"}
-\small
+\footnotesize
+
 - Einfache Entwicklung ansprechender Diagramme und interaktiver Apps (z.B. [shiny](http://shiny.rstudio.com)).
 - Große und aktive Entwickler*innen Gemeinde mit langer Geschichte: seit 1993; R Konsortium, u.a. IBM, Microsoft, TIPCO, Google, ...
 - Neue Methoden der Datenanalyse werden häufig in R entwickelt (auch Big Data, KI, etc.)
@@ -37,7 +39,7 @@
 ::::::::::::::
 
 **Nachteile:**
-\small
+\footnotesize
 
 - Bisher keine echte “Standard”-GUI (aber es gibt ja RStudio)
 - Verfügbare Routinen/ Pakete manchmal unübersichtlich
