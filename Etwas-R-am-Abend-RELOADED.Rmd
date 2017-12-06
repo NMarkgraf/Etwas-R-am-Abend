@@ -44,7 +44,7 @@ set.seed(2009)
 ```{r child = './content/040-Ein-paar-Schritte-in-R.Rmd'}
 ```
 
-```{r child = './content/060-Ein-kurze-Datenanalyse.Rmd'}
+```{r child = './content/060-Eine-kurze-Datenanalyse.Rmd'}
 ```
 
 ```{r child = './content/070-R-intern.Rmd'}
