@@ -18,9 +18,9 @@
 
 \ifthenelse{\equal{#1}{4x3}}{%
 %\ifstrequal{#1}{4x3}{%
-	%% 4:3 -> 160 x 120
-	\setlength{\myPaperWidth}{200mm}
-	\setlength{\myPaperHeight}{150mm}
+	%% 4:3 -> 160 x 120 / 180 x 135 / 200 x 150
+	\setlength{\myPaperWidth}{180mm}
+	\setlength{\myPaperHeight}{135mm}
 	\typeout{Set ScreenRatio to 4:3 (160x120)}
 }{
     \ifthenelse{\equal{#1}{16x9}}{%

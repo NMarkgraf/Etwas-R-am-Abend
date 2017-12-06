@@ -6,8 +6,11 @@ Einlesen der  Daten:
 Im Folgenden kann man ein paar der Möglichkeiten von **R** finden, wie man sie in Vorlesungen braucht.
 
 Dazu nehmen wir die "tipping" Daten^[Bryant, P. G. and Smith, M (1995) Practical Data Analysis: Case Studies in Business Statistics. Homewood, IL: Richard D. Irwin Publishing] in den Datenrahmen *tips*.
-
-```{r, eval =FALSE, message = FALSE}
+```{r, eval=TRUE, include=FALSE}
+download.file("https://goo.gl/whKjnl", destfile = "tips.csv")
+tips <- read.csv2("tips.csv")
+```
+```{r, eval=FALSE, message = FALSE}
 # Herunterladen 
 download.file("https://goo.gl/whKjnl", destfile = "tips.csv")
 # Einlesen in R
