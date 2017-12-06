@@ -1,0 +1,19 @@
+## Copyright/ Lizenz/ Version
+
+(C)opyleft in 2016/2017 by Norman Markgraf
+
+Diese Folien wurde von Norman Markgraf entwickelt und stehen unter der Lizenz CC-BY-SA-NC 3.0 de: [https://creativecommons.org/licenses/by-nc-sa/3.0/de/](https://creativecommons.org/licenses/by-nc-sa/3.0/de/). 
+
+- Datum erstellt: `r Sys.Date()`
+- R Version: `r getRversion()`
+- `mosaic` Version: `r packageVersion("mosaic")`
+
+Diese Präsentation wurde mit **RMarkdown** und ein paar kleinen Helferlein (**NPBT**) erstellt.
+
+Sie finden die (tages-)aktuelle Version, inklusive der Quellen, unter:
+
+https://github.com/NMarkgraf/Etwas-R-am-Abend
+
+Bitte melden Sie Fehler und Verbesserungsvorschläge an: [nmarkgraf@hotmail.com](<mailto:nmarkgraf@hotmail.com>)
+
+**Meinen Dank** an Oliver Gansser, Matthias Gehrke, Karsten Lübke, Chistian Schwarz und Sebastian Sauer für Ideen, Tipps und Unterstützung bei der Skripterstellung!

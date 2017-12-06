@@ -42,7 +42,7 @@ beamer_presentation_loop:
     - -V
     - papersize=A4
     - -V
-    - fontsize=12pt
+    - fontsize=16pt
     - -V
     - lang=de
     - -V

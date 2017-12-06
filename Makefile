@@ -34,19 +34,11 @@ MKDIR = mkdir
 PANDOCFILTERDIR = "pandoc-filter"
 REPOURL = "https://github.com/NMarkgraf/typography.py.git"
 
-SCHLEIFEN  = Schleife-PraDA.pdf 
-SCHLEIFEN += Schleife-DES.pdf 
-SCHLEIFEN += Schleife-QFM.pdf
-SCHLEIFEN += Schleife-WM.pdf
-SCHLEIFEN += Schleife-WMQD.pdf
-SCHLEIFEN += Schleife-QMWI.pdf
+SCHLEIFEN  = Schleife.pdf 
 
-FOLIEN  = Praxis-der-Datenanalyse.pdf 
-FOLIEN += Datenerhebung-Statistik.pdf
-FOLIEN += Quantitative-Forschungsmethoden.pdf
-FOLIEN += Wissenschaftliche-Methodik.pdf
-FOLIEN += WissMethoden-QuantitativeDatenanalyse.pdf
-FOLIEN += QM-Wirtschaftsinformatik.pdf
+FOLIEN  = Etwas-R-am-Abend-RELOADED.pdf 
+
+ALLES = $(FOLIEN) $(SCHLEIFEN)
 
 HTML = $(FOLIEN:%.pdf=%_slidy.html) $(FOLIEN:%.pdf=%_ioslides.html)
 
@@ -54,7 +46,7 @@ HTML = $(FOLIEN:%.pdf=%_slidy.html) $(FOLIEN:%.pdf=%_ioslides.html)
 
 .PHONY: all all-schleifen all-folien all-html
 
-all: init update $(SCHLEIFEN) $(FOLIEN)
+all: init update $(FOLIEN)
 
 all-schleifen: init update $(SCHLEIFEN)
 
@@ -100,7 +92,7 @@ clean-filterdir:
 	fi
 
 clean-tex:
-	$(RM)  $(SCHLEIFEN:%.pdf=%.tex) $(FOLIEN:%.pdf=%.tex) texput.log
+	$(RM) $(ALLES:%.pdf=%.tex) texput.log $(ALLES:%.pdf=%.aux) $(ALLES:%.pdf=%.log) $(ALLES:%.pdf=%.nav) $(ALLES:%.pdf=%.out) $(ALLES:%.pdf=%.snm) $(ALLES:%.pdf=%.snm) $(ALLES:%.pdf=%.tex) $(ALLES:%.pdf=%.synctex.gz) $(ALLES:%.pdf=%.toc) $(ALLES:%.pdf=%.vrb)
 	
 clean-schleifen: 
 	$(RM) $(SCHLEIFEN)

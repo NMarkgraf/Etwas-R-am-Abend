@@ -1,84 +1,21 @@
----
-title: "Etwas R am Abend"
-author: "Norman Markgraf"
-date: "06.12.2017"
-institute: Standort Köln
----
+# Eine kurze Datenanalyse
 
-```{r setup, include=FALSE}
-library(knitr)
-knitr::opts_chunk$set(
-    echo = TRUE,
-    background='#E0E0E0',
-#   fig.keep="none",
-    out.width="80%",
-#   cache = TRUE,
-#    tidy=TRUE,
-    fig.align = "center",
-    width.cutoff=60
-)
-options(width = 73)
-library(mosaic)
-library(tidyverse)
-library(formatR)
-library(mosaic)
-
-set.seed(2009)
-```
-
-```{r child = './content/010-Einfuehrung-R.Rmd'}
-```
-
-```{r child = './content/020-Installation-R.Rmd'}
-```
-
-```{r child = './content/030-Erste-Schritte-in-R.Rmd'}
-```
-
-```{r child = './content/035-Strukturen-in-R.Rmd'}
-```
-
-```{r child = './content/037-Statistische-Funktionen.Rmd'}
-```
-
-```{r child = './content/040-Ein-paar-Schritte-in-R.Rmd'}
-```
-
-```{r child = './content/060-Ein-kurze-Datenanalyse.Rmd'}
-```
-
-```{r child = './content/070-R-intern.Rmd'}
-```
-
-```{r include=FALSE, eval=FALSE}
-# Appendix
-```
-
-```{r child = './content/A010-Literatur.Rmd'}
-```
-
-```{r child = './content/A070-Videos.Rmd'}
-```
-
-```{r child = './content/A090-Copyright.Rmd'}
-```
-
-
-
-## Eine kurze Datenanalyse
+## Vorbereitung
+Einlesen der  Daten:
 
 Im Folgenden kann man ein paar der Möglichkeiten von **R** finden, wie man sie in Vorlesungen braucht.
 
-Dazu nehmen wir die Daten *tips* aus dem Unterrichtsmaterialsammlung von **Prof. Dr. Sebastian Sauer**.
+Dazu nehmen wir die "tipping" Daten^[Bryant, P. G. and Smith, M (1995) Practical Data Analysis: Case Studies in Business Statistics. Homewood, IL: Richard D. Irwin Publishing] in den Datenrahmen *tips*.
 
-https://github.com/sebastiansauer/Daten_Unterricht 
+```{r, eval =FALSE, message = FALSE}
+# Herunterladen 
+download.file("https://goo.gl/whKjnl", destfile = "tips.csv")
+# Einlesen in R
+tips <- read.csv2("tips.csv")
 
-```{r, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE}
-library(readr)
-path <- paste0("https://raw.githubusercontent.com/sebastiansauer/",
-               "Daten_Unterricht/master/tips.csv")
-tips <- read_csv(file=path)
-tips$X1 <- NULL
+# Alternativ - heruntergeladene Datei einlesen:
+# tips <- read.csv2(file.choose()) 
+
 ```
 
 Darüberhinaus nutzen wir einige Befehle aus der Paketsammlung **Mosaic**, welches wir dazu laden
@@ -91,31 +28,33 @@ library(mosaic) # Hauptsächlich "lattice"
 Schauen wir uns die Daten etwas an:
 
 ```{r, tidy=TRUE, size='tiny', tidy.opts=list(blank=FALSE, width.cutoff=60)}
-glimpse(tips)
+inspect(tips)
 ```
 
-Dimension des Datensatzes:
+## Tischgröße wirklich quantitativ?
+
+Umwandeln der Tischgröße in eine kategoriale Variable:
+
 ```{r}
-dim(tips)
+levels(tips$size)
+tips$size <- as.factor(tips$size)
+levels(tips$size) 
+inspect(tips)
 ```
-
-
 
 ## Balkendiagramm bei kategorialen Daten
 :::::::::::::: {.columns} 
 ::: {.column width="49%"}
 
-```{r, eval=TRUE, echo=TRUE}
-library(lattice)
+```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
 bargraph(~sex, data=tips)
 ```
 
 :::
 ::: {.column width="49%"}
 
-```{r, eval=TRUE, echo=TRUE}
-library(ggplot2)
-qplot(sex, data=tips)
+```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
+bargraph(~size, data=tips)
 ```
 
 :::
@@ -126,40 +65,34 @@ qplot(sex, data=tips)
 :::::::::::::: {.columns} 
 ::: {.column width="49%"}
 
-```{r, eval=TRUE, echo=TRUE}
-library(lattice)
+```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
 histogram(~tip, data=tips)
 ```
 
 :::
 ::: {.column width="49%"}
 
-```{r, eval=TRUE, echo=TRUE}
-library(ggplot2)
-qplot(tip, data=tips, binwidth=1)
+```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
+histogram(~total_bill, data=tips)
 ```
 
 :::
 ::::::::::::::
 
-## Histogramm bei metrischen Daten, facettiert
+## Histogramm bei metrischen Daten, bedingt nach
 
 :::::::::::::: {.columns} 
 ::: {.column width="49%"}
 
-```{r, eval=TRUE, echo=TRUE}
-library(lattice)
-#
+```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
 histogram(~tip | sex, data=tips)
 ```
 
 :::
 ::: {.column width="49%"}
 
-```{r, eval=TRUE, echo=TRUE}
-library(ggplot2)
-qplot(tip, facets = ~sex, data=tips, 
-      binwidth=1, geom="histogram")
+```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
+histogram(~total_bill | size, data=tips)
 ```
 
 :::
@@ -170,56 +103,27 @@ qplot(tip, facets = ~sex, data=tips,
 :::::::::::::: {.columns} 
 ::: {.column width="49%"}
 
-```{r, eval=TRUE, echo=TRUE}
-library(lattice)
-#
+```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
 bwplot(~tip, data=tips)
 ```
 
 :::
 ::: {.column width="49%"}
 
-```{r, eval=TRUE, echo=TRUE}
-library(ggplot2)
-qplot(x=1, y=tip, data=tips, 
-      geom="boxplot")
+```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
+bwplot(total_bill ~ size, data=tips)
 ```
 
 :::
 ::::::::::::::
 
-
-## Boxplot mit metrischen Daten für Gruppem
-
-:::::::::::::: {.columns} 
-::: {.column width="49%"}
-
-```{r, eval=TRUE, echo=TRUE}
-library(lattice)
-#
-bwplot(tip ~ sex, data=tips)
-```
-
-:::
-::: {.column width="49%"}
-
-```{r, eval=TRUE, echo=TRUE}
-library(ggplot2)
-qplot(x=sex, y=tip, data=tips, 
-     geom="boxplot")
-```
-
-:::
-::::::::::::::
 
 ## Boxplot mit metrischen Daten für Gruppen, facettiert 
 
 :::::::::::::: {.columns} 
 ::: {.column width="49%"}
 
-```{r, eval=TRUE, echo=TRUE}
-library(lattice)
-#
+```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
 bwplot(tip ~ sex | smoker, 
        data=tips)
 ```
@@ -227,11 +131,8 @@ bwplot(tip ~ sex | smoker,
 :::
 ::: {.column width="49%"}
 
-```{r, eval=TRUE, echo=TRUE}
-library(ggplot2)
-qplot(x=sex, y=tip, data=tips, 
-      facets=~smoker,
-      geom="boxplot")
+```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
+bwplot(tip ~ sex | smoker, data=tips, main="Trinkgeld nach Rauchern und Geschlecht", ylab="Trinkgeld")
 ```
 
 :::
@@ -239,27 +140,17 @@ qplot(x=sex, y=tip, data=tips,
 
 ## Streudiagramm mit zwei metrischen Variablen
 
-:::::::::::::: {.columns} 
-::: {.column width="49%"}
 
-```{r, eval=TRUE, echo=TRUE}
-library(lattice)
-xyplot(tip~total_bill, 
-       data=tips)
+```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
+xyplot(tip~total_bill, data=tips, ylab="Trinkgeld (in USD)", xlab="Rechnungsbetrag (in USD)", main="Trinkgelder in Abhängigkeit vom Rechnungsbetrag")
 ```
 
-:::
-::: {.column width="49%"}
+## Streudiagramm mit zwei metrischen Variablen
 
-```{r, eval=TRUE, echo=TRUE}
-library(ggplot2)
-qplot(total_bill, tip,
-      data=tips)
+
+```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
+xyplot(tip~total_bill, data=tips, ylab="Trinkgeld (in USD)", xlab="Rechnungsbetrag (in USD)", main="Trinkgelder in Abhängigkeit vom Rechnungsbetrag", sub="Daten gruppiert nach dem Geschlecht", groups=sex, auto.key = T)
 ```
-
-:::
-::::::::::::::
-
 
 ## Häufigkeitstabellen zwei kategorialen Variablen
 
@@ -268,8 +159,7 @@ Dazu generieren wir die Häufigkeitstabelle mit dem Befehl *tally* und speichern
 :::::::::::::: {.columns} 
 ::: {.column width="49%"}
 
-```{r, tidy=TRUE,}
-library(mosaic)
+```{r, tidy=TRUE, echo=TRUE}
 tab <-tally(sex ~ smoker, data=tips)
 tab
 ```
@@ -277,7 +167,7 @@ tab
 :::
 ::: {.column width="49%"}
 
-```{r eval=FALSE}
+```{r tidy=TRUE, eval=FALSE}
 library(knitr)
 kable(tab, 
   col.names=c("N.-Raucher", "Raucher"))
@@ -361,6 +251,9 @@ Test der Unabhängigkeit geht nur mit zwei nominalen Variablen. In *tab* haben w
 xchisq.test(tab)
 ```
 
+## Nullhypotesten-Tests
+
+
 ## t-Test für abhängige Stichproben (Differenzentest)
 
 Variablen müssen beide metrische sein und zwischen beiden Variablen wird eine Differenz gebildet.
@@ -405,7 +298,7 @@ favstats(tip~day, data=tips)
 
 *Forschungshypothese:* Es gibt einen Unterschied beim Trinkgeld bei/zwischen den Tagen.
 
-```{r, tidy=TRUE,}
+```{r, tidy=TRUE}
 summary(aov(tip~day, data=tips))
 ```
 
@@ -493,14 +386,3 @@ splitat <- 29
 
 :::
 ::::::::::::::
-
-## Wie geht es weiter?
-
-Dieses kleine Kick-Off für **R** ist natürlich nicht vollständig. - Wo es, aus meiner persönlichen Sicht, lohnt weiter zu schauen sind die folgenden Themen:
-
-* **Grammar of Graphic** und **ggplot2** für schönere und aussagekräftige Grafiken in **R**.
-* *tidyr*, [dplyr](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)  und Co, die Welt des Datenmanagement in **R**
-* [*rmarkdown*](http://rmarkdown.rstudio.com) und der Weg zu eigenen Dokumenten 
-* [*Shiny*](http://shiny.rstudio.com) und die interaktive Webdarstellung von Statistiken 
-* *mosaic* 
-

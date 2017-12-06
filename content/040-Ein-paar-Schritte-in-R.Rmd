@@ -1,0 +1,121 @@
+# Ein paar Schritte in R
+
+## Laden von mosaic und Vorbereiten
+
+Wir arbeiten mit **mosaic**. Daher laden wir als erstes (immer) das Paket in den Speicher von R.
+Als zweites setzen wir hier mit `set.seed(2009)` den Zufallszahlengenerator von R auf einen von uns gewählten Startwert; dies dient der Reproduzierbarkeit!
+
+```{r}
+library(mosaic)
+set.seed(2009)
+```
+
+## Wir laden ein paar Daten
+
+- Via **RStudio**:
+    Gehen Sie auf das recht obere Fenster und klicken Sie **Import Dataset**, danach **From Web URL** und geben Sie 
+    als URL bitte https://raw.githubusercontent.com/NMarkgraf/Etwas-R-zum-Nachmittag/master/Datasets/miete03.asc oder einfacher 
+    https://tinyurl.com/yblxykf3 ein.
+    
+    Beachten 
+    
+- Via **R** direkt:
+  Man kann auch direkt aus **R** mittels ein paar Zeilen die Daten laden!
+  Laden wir ein paar Demodaten aus dem Netz:
+```{r, eval=TRUE, echo=TRUE}
+miete03 <- read.table(file = "https://tinyurl.com/yblxykf3", header = TRUE)
+```
+
+
+## Die ersten/ letzten Zeilen der Tabelle ansehen
+
+Mit dem Befehl **head()** schaut man sich die ersten Zeilen (im Bsp. die ersten 3 Zeilen) eines *Dataframes* an:
+```{r,  eval=TRUE, echo=TRUE}
+head(miete03, 3)
+```
+Mit dem Befehl **tail()** schaut man sich die ersten Zeilen (im Bsp. die letzen 2 Zeilen) eines *Dataframes* an:
+```{r,  eval=TRUE, echo=TRUE}
+tail(miete03, 2)
+```
+
+## Der Befehl `inspect()`
+
+
+```{r}
+inspect(miete03)
+```
+
+## Häufigkeitstabelle und Balkendiagramme
+
+Mit dem Befehl **tally** können wir *Häufigkeitstabellen* erstellen:
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+Absolute Häufigkeitstabelle
+```{r}
+tally( ~ rooms, data=miete03, 
+       format="count")
+```
+
+:::
+::: {.column width="49%"}
+
+Relative Häufigkeitstabelle
+```{r}
+options(digits=1)
+tally( ~ rooms, data=miete03, 
+       format="proportion")
+```
+```{r echo=FALSE}
+options(digits=6)
+```
+
+:::
+::::::::::::::
+
+## Häufigkeitstabelle und Balkendiagramme
+
+Und mit dem Befehl **bargraph()** erstellen wir ein Balkendiagramm daraus:
+```{r,  eval=TRUE, echo=TRUE, tidy=TRUE}
+bargraph( ~ rooms, data= miete03 )
+```
+
+## Schönere Diagramme mit **ggplot2** und **qplot()**
+
+**Kurzer Exkurs:** 
+
+Mit dem Paket `ggplot2` und der Funktion `qplot()` würden sich auch schöne Graphiken erstellen lassen!
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(ggplot2)
+qplot(miete03$rooms, bins=12,
+      xlab="Zimmer", ylab="Häufigkeit")
+
+```
+
+:::
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+library(ggplot2)
+ggplot(miete03, aes( x = rooms)) + 
+    geom_bar() + xlab("Zimmer") + 
+    ylab("Häufigkeit")
+```
+
+:::
+::::::::::::::
+
+## Schönere Graphiken? - Linksammlung:
+
+Wie man mit **ggplot2** noch mehr und noch schönere Grafiken erstellt, können Sie finden bei:
+
+- http://ggplot2.org
+- http://docs.ggplot2.org/current/index.html
+- http://www.cookbook-r.com/Graphs/
+- https://www.datacamp.com/courses/data-visualization-with-ggplot2-1
+- http://r4ds.had.co.nz

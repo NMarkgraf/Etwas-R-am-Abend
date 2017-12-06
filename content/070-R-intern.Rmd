@@ -1,0 +1,67 @@
+# R intern
+
+## Der Arbeitsbereich in R
+
+Der *Arbeitsbereich* (**workspace**) in **R** ist eine Sammlung von Objekten, die aktuell im Speicher vorhanden ist.
+
+Sie können diese Objekte anzeigen mit dem Befehl:
+```{r, eval=FALSE, echo=TRUE}
+ls()
+```
+
+Löschen können sie die Objekte mit
+```{r, eval=FALSE, echo=TRUE}
+rm()
+```
+
+## Pakete
+
+* **R** ist ein **Paketen** organisiert.
+* Ein *Paket* ist eine kompakte Zusammenfassung von Code, Hilfeseiten, Daten, Beispielen usw. zu einem bestimmten Themengebiet.
+* **R** wächst durch ständig neue Pakete!
+* Mit der Installation von **R** haben Sie eine Grundausstattung an wichtigen Paketen, welche Sie nach belieben erweitern können und sollten!
+* Die wichtigsten Pakete gibt es beim [*C*omprehensive *R* *A*rchive *N*etwork](http://cran.r-project.org) kurz **CRAN**.
+
+## Pakete installieren / aktualisieren
+
+Um ein Paket, zum Beispiel **ggplot2**, zu installieren benutz man den Befehl:
+```{r, eval=FALSE, echo=TRUE}
+install.packages("ggplot2")
+```
+
+Um gleichzeitig weitere, notwendige Pakete zu installieren nutzt man die Option "dependencies=TRUE":
+```{r, eval=FALSE, echo=TRUE}
+install.packages("ggplot2", dependencies=TRUE)
+```
+
+Es gibt aber noch andere Wege! (Direkt in RStudio z.B.!)
+
+**Aktualisieren von (allen) Paketen:**
+
+```{r, eval=FALSE, echo=TRUE}
+update.packages()
+```
+
+## Pakete benutzen
+
+- Mit dem Befehl **library()** (ohne Argument) werden alle bereits installierten Pakete aufgelistet.
+    Nicht alle davon sind automatisch verfügbar, sondern müssen erst geladen werden
+```{r, eval=FALSE, echo=TRUE}
+library(ggplot2)
+```
+
+- Liegt das Paket nicht im Standard-library-Verzeichnis, benutzt man die Option **lib.loc=**:
+```{r, eval=FALSE, echo=TRUE}
+library(ggplot2, lib.loc= <Verzeichnis> )
+```
+
+- Alternativ können Pakete auch mit **require()** geladen werden. Diese Funktion liefert als Rückgabe die Information ob das Paket verfügbar ist oder nicht.
+
+```{r, eval=FALSE, echo=TRUE}
+require(ggplot2)
+[1] TRUE
+```
+
+## Verwaltung von Paketen
+
+

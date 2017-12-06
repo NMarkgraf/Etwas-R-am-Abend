@@ -1,0 +1,180 @@
+# Statistische Funktionen
+
+## Varianzen
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+**R** berechnet die Varianz von Daten mit Hilfe der (Schätzer-)Formel
+$$\frac1{n-1} \cdot \sum (x-\bar{x})^2,$$ 
+wie man leicht nachrechnen kann:
+
+```{r, eval=TRUE, echo=TRUE, tidy=TRUE}
+n <- length(aVec)
+var(aVec)
+# ist das selbe wie
+1/(n-1) * sum( (aVec-mean(aVec))^2 )
+# Dagegen ist
+1/n * sum( (aVec-mean(aVec))^2 )
+```
+
+:::
+::: {.column width="49%"}
+
+Die Standardabweichung ist die Quadratwurzel der Varianz:
+```{r, eval=TRUE, echo=TRUE}
+sd(aVec)
+sqrt(var(aVec))
+```
+
+:::
+::::::::::::::
+
+## Varianz einer Population
+
+Will man die Varianz und die Standardabweichung mit Hilfe der Formel
+$$\frac1{n} \cdot \sum (x-\bar{x})^2,$$ 
+berechnen, so muss man in **R** etwas tun:
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE, tidy=TRUE}
+n <- length(aVec)
+factor <-(n-1)/(n) 
+# Wert
+var(aVec)
+# Korrigierter Wert
+factor*var(aVec)
+# Zur Probe:
+1/n * sum( (aVec-mean(aVec))^2 )
+```
+
+:::
+::: {.column width="49%"}
+
+```{r}
+factorSD <-sqrt((n-1)/n) 
+# Wert von R:
+sd(aVec)
+# Korrigierter Wert
+factor*sd(aVec)
+# Zur Probe
+sqrt(1/n * sum( (aVec-mean(aVec))^2 ))
+```
+
+:::
+::::::::::::::
+
+## Rechnen mit Vektoren
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r}
+aVec2 <- rep(2, 6)
+aVec
+aVec2
+# Skalarprodukt
+aVec %*% aVec2
+# Komponentenweises *
+aVec * aVec2
+```
+
+:::
+::: {.column width="49%"}
+
+```{r}
+aVec3 <- aVec[2:5]
+aVec3
+aVec3[3]
+aVec3[3] <- NA
+aVec3
+mean(aVec3)
+# NA ignorieren:
+mean(aVec3, na.rm = TRUE)
+```
+
+:::
+::::::::::::::
+
+## Dataframes
+
+Merkmale eines Markmalsträgers fasst man gelegendlich zu Tabellen zusammen. 
+In **R** kann man dazu *data frames* nutzen:
+
+```{r}
+# Die Datenreihen
+Name <- c("Anna", "Beria", "Carlo", "Edda")
+Geschlecht <- c("weiblich", "weiblich", "männlich", "weiblich")
+Größe <- c(1.60, 1.68, 1.81, 1.71)
+Gewicht <- c(52, 60, 80, 70)
+```
+
+Diese Datenreihen kann man wie folgt zu einem Objekt zusammenfassen:
+
+```{r}
+# Als Dataframe:
+df <- data.frame(
+    Name = Name, 
+    Geschlecht = Geschlecht, 
+    Größe = Größe, 
+    Gewicht = Gewicht)
+#
+```
+
+
+## Ausgabe von Dataframes als Tabellen
+
+```{r}
+df
+```
+
+```{r}
+library(knitr)
+kable(df)
+```
+
+## Arbeiten mit Dataframes
+
+```{r}
+# Ausgabe der Durchschnittsgröße:
+mean(df$Größe)
+# Ausgabe des Durchschnittsgewichts:
+mean(df$Gewicht)
+
+library(dplyr) 
+# Nur die Damen
+mean(filter(df, Geschlecht=="weiblich")$Größe)
+# Nur die Herren
+mean(filter(df, Geschlecht=="männlich")$Gewicht)
+
+```
+
+## Arbeiten mit Dataframes
+
+```{r, tidy=TRUE}
+# BMI der Tabelle hinzufügen:
+df <- mutate(df, BMI = round(Gewicht / Größe^2,2))
+df
+```
+
+<div class="columns">
+<div class="column" width="49%">
+
+```{r}
+# Nur das Geschlecht und den BMI ausgeben
+kable(select(df, Geschlecht, BMI))
+
+```
+
+</div>
+<div class="column" width="49%">
+
+```{r}
+# Der Größe nach sortieren (absteigend)
+kable(arrange(select(df, Name, Größe),
+              -Größe))
+```
+</div>
+</div>

@@ -1,0 +1,13 @@
+## Literaturtipps
+
+Wenn Sie sich mehr für **R** interessieren. Ein erster Anlaufpunkt wäre z.B. das Skript "Praxis der Datenanalyse" von 
+
+https://sebastiansauer.github.io/Praxis_der_Datenanalyse/
+
+Sauer, S., Gansser, O. (2017). Praxis der Datenanalyse. Skript zum Modul im MSc.-Studiengang “Wirtschaftspsychologie & Consulting” an der FOM. FOM Nürnberg. DOI: 10.5281/zenodo.580649.
+
+Ein gutes Werk in englischer Sprache finden Sie hier:
+
+http://r4ds.had.co.nz/
+
+Garrett Grolemund und Hadley Wickham. R for Data Science.Published by O’Reilly January 2017 First Edition.

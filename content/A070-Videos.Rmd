@@ -1,0 +1,15 @@
+## Videos zum Thema R und Rcmdr:
+
+Hier finden Sie Videos, die einige Schritte der Datenaufbereitung und deskriptiver/ explorativer Datenanalyse erläutern (zumeist mit R-Commander):
+
+- boxplots erstellen https://www.youtube.com/watch?v=9XBjOmA7sNs
+- Textdatei öffnen https://www.youtube.com/watch?v=QnM9HBe23Y8
+- Öffnen der Datei Polizeistudie https://www.youtube.com/watch?v=SDOoKuj5_7o
+- SPSS Datei importieren https://www.youtube.com/watch?v=HS8H_n7Vrm0
+- Deskriptive Statistik erstellen https://www.youtube.com/watch?v=qrMpgk-7Wus
+- Variablen in Faktoren umwandeln und Balkendiagramm https://www.youtube.com/watch?v=PRR-3kblt8k
+- Streudiagramm https://www.youtube.com/watch?v=brE72_0stO0
+- Korrelationsmatrix https://www.youtube.com/watch?v=pl92q_S-r8E
+- Datenmatrix erstellen https://youtu.be/-EaeBL9J4IE
+
+Die Videos wurden von Frau Prof. Ferreira erstellt. 

@@ -1,0 +1,43 @@
+# Die erste Schritte in R
+
+## Die ersten Schritte / **R** als Taschenrechner
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r}
+# Punkt- vor Strichrechnung
+2 * 3 + 2 - 25/5 + 2^3
+```
+```{r}
+# Trigometrische Funktionen
+cos(pi/2)^2 + sin(pi/2)^2
+```
+```{r}
+# Logarithmen & Exponetialfunktion
+log(exp(3))
+```
+```{r}
+# Unendlich
+1/0
+```
+:::
+::: {.column width="49%"}
+```{r}
+# Not a Number (keine Zahl)
+0/0
+```
+```{r}
+# Not Available; ein fehleder Wert
+NA
+```
+```{r}
+# Vektoren (combine)
+c(1, 4:8)
+```
+```{r}
+# Vektor/Liste ohne Inhalt
+c()
+```
+:::
+::::::::::::::
+
+

@@ -1,0 +1,124 @@
+# Installation von R und RStudio
+
+## Einfach nur R? Oder darf es etwas mehr sein?
+
+Natürlich können Sie **R** als Programmiersprache direkt von der Konsole aus füttern.
+
+Besser ist es aber seine Skripte vorab mit Hilfe eines Texteditors zu schreiben und **R** dieses ausführen zu lassen.
+
+Noch besser ist die Nutzung von Integrierten Entwicklungsumgebung (*IDE*), wie z.B. [RStudio](https://www.rstudio.com)
+
+**Meine Empfehlung:**
+
+- **R** (3.4.3) 
+    - **R** finden Sie hier: https://cran.rstudio.com oder https://www.r-project.org
+    - Aktuell ist die Version 3.4.3
+    - **Achtung MAC-Nuzter!!!**: Sie benötigen zusätzlich erst noch XQuartz. 
+        - XQuartz finden Sie hier: https://www.xquartz.org
+        
+- **RStudio Desktop**  (akt. Version: 1.1.383)
+    - Die aktuelle Version finden Sie hier: https://www.rstudio.com/products/rstudio/download/
+    - Nur Linux-Nutzer **RStudio Server** (akt. Version: 1.1.383)  
+  
+(Und *bitte*, *vergessen* Sie den **R-CmdR**! Wenn schon, dann schauen Sie sich einmal [jamovi](https://www.jamovi.org) an!)
+
+
+## R Installation
+
+0. (Mac-User bitte zurerst [xquartz](https://www.xquartz.org) installieren)!
+1. R ([https://www.r-project.org/](https://www.r-project.org/))
+2. RStudio Desktop ([https://www.rstudio.com/](https://www.rstudio.com/))
+3. Installation von Zusatzpaketen in RStudio:
+
+**Tipps für den Installationsprozess:**
+
+- Abwarten und bestätigen ;-)
+- Kaffee/ Tee/ Wasser/ ... trinken und ruhig bleiben! 
+
+Die "Fehlermeldungen" gehören meisst zum Installationsprozess. Wenn etwas gar nicht läuft. Fragen!
+
+
+
+```{r, eval=FALSE}
+install.packages("mosaic")
+```
+
+
+## Einfach nur R oder darf es etwas mehr sein?
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+**R** ist ein eine *komandozeilenorientierte*-Sprache!
+
+```{r, echo = TRUE}
+1+1
+```
+
+```{r, echo = TRUE}
+1+2*3^4
+```
+
+```{r, echo = TRUE}
+x <- 1; y <- 2
+x+y
+```
+:::
+::: {.column width="49%"}
+Die (recht schnell) schöne Ergebnisse produziert:
+```{r, echo=TRUE}
+x <- seq(-pi,pi,by=0.1)
+plot(x, sin(x),  type="l", col="red",
+     main="Sinuskurve")
+```
+:::
+::::::::::::::
+
+
+## Das wichtigste Pakete und wie man Pakete generell installiert
+
+Im Allgemeinen installiert man ein Paket `r '<blubber>'` durch den Befehl:
+```{r, eval=FALSE, echo=TRUE, tidy=TRUE}
+install.packages("<blubber>", dependencies=TRUE)
+```
+
+Für einen guten Start sollte man vor allem ein Paket installieren:
+
+Das Paket **mosaic**!
+    
+Mehr Informationen zu **mosaic** finden Sie hier:
+    
+- [Project MOSAIC](http://mosaic-web.org)
+
+- [Less Volume, More Creativity – Getting Started with the mosaic Package](https://cran.r-project.org/web/packages/mosaic/vignettes/LessVolume-MoreCreativity.html)  
+
+  
+## Das Paket MOSAIC installieren
+
+Ihr erster R Befehle sollten wie folgt lauten:
+
+```{r, eval=FALSE, echo=TRUE}
+# Laden des mosaic Pakets:
+install.packages("mosaic", dependencies=TRUE) 
+```
+
+Mit '#' leitet man einen Kommentar ein. Sie müssen aber die Beispiele nicht mit den Kommentaren eintippen, es reicht:
+```{r, eval=FALSE, echo=TRUE}
+install.packages("mosaic", dependencies=TRUE) 
+```
+
+Bitte bestätigen Sie alle Anfragen und haben Sie etwas Geduld. Es wird eine Menge nachgeladen. Aber nur einmal. Also keine Sorge!
+
+## Was Pakete installieren eigentlich bedeutet
+
+Jede R Installation hat einen Vorratsspeicher, in dem die Pakete abgelegt werden. 
+Mit dem Befehl `install.package()` laden Sie dieses Paket aus dem Internet in diesen Vorratsspeicher.
+
+Ähnlich wie Sie ein Buch aus der Bücherrei/ Buchhandlung kaufen und ins Regal stellen.
+
+Wenn Sie nun so ein Buch lesen wollen, dann müssen Sie es in die Hand nehmen, aufschlagen und lesen.
+
+In R wird ein Buch aus dem Vorratsspeicher geholt und R angewiesen damit zu arbeiten in dem man den Befehl `library()`nutzt.
+
+**Denken Sie daran:**
+Sie kaufen ein Buch nur einmal! Lesen tuen Sie es aber öfter!
+Demensträchend müssen Sie ein Paket nur *einmal* in den Vorratsspeicher laden, können es aber dann mit `library()` beliebig oft benutzen!

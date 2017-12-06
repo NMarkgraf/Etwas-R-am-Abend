@@ -1,0 +1,179 @@
+# Strukturen in R
+
+##  Variablen
+
+- Variablen in **R** können Skalare, Vektoren, Matrizen oder Objekte beliebiger anderer Klassen sein.
+- Man **erzeugt** eine Variable in dem man ihr mit Hilfe von "<-" oder "=" etwas **zuweist**.
+- **Variablennamen** können Kombinationen aus Buchstaben, Ziffern, Punkt und Unterstrich sein. Aber **keine Ziffern vorne**! 
+- **R** ist **case-sensetiv**, es unterscheidet zwischen Groß- und Kleinschreibung!
+
+```{r, eval=TRUE, echo=TRUE }
+a <- c("FOM", "und", "R", "sind", "SUPER")
+A <- 42
+a
+A
+```
+
+## Datentypen
+
+In **R** gibt es die Datentypen
+
+- **numeric** - ganzzahlige (*integer*) oder reelle (*double*) Zahlen
+- **character** - Zeichenketten
+- **logic** - die logischen Operatoren **TRUE** und **FALSE**
+- **list** - Liste von Objekten jeder Art (die wiederum Listen beinhalten können!)
+    
+Befehle zum überprüfen der Datentypen:
+
+```{r, eval=TRUE, echo=TRUE }
+mode(a)
+str(a)
+typeof(a)
+```
+
+
+## Vektoren
+
+Ein Vektor wird mit dem Befehl **c()** (für *combine*) erzeugt:
+
+```{r, eval=TRUE, echo=TRUE}
+a <- 5
+vektorMitBeliebigemNamen <- c(log(1), a, sqrt(16), 3^2)
+vektorMitBeliebigemNamen
+```
+
+R kann (Rechen-)Operationen auf ganzen Vektoren (elementweise) durchführen:
+
+```{r, eval=TRUE, echo=TRUE}
+vektorMitBeliebigemNamen * 2
+vektorMitBeliebigemNamen + 1
+```
+
+
+## Sequenzen
+
+Zahlensequenzen werden mit dem Befehl **seq()** erzeugt. Dem Befehl können verschiedene Argumente Übergeben werden:
+
+:::::::::::::: {.columns}
+::: {.column width="49%"}
+```{r, eval=TRUE, echo=TRUE}
+seq(from = 2, to = 9)
+seq(from = 2, to = 8, by=3)
+seq(from = 2, by = 0.5, length.out = 8)
+# 'n:m' entspricht 
+# seq(from=n, to=m, by=1)
+vektor <- 1:4 
+vektor
+```
+:::
+::: {.column width="49%"}
+```{r, eval=TRUE, echo=TRUE}
+# Werte mit rep() wiederholen::
+rep("X", times = 5)
+zahlen1 <- c(2, 4)
+zahlen1
+zahlen2 <- rep(zahlen1, times = 2)
+zahlen2
+rep(zahlen1, each = 2)
+```
+:::
+::::::::::::::
+## Logische Abfragen
+
+```{r, eval=TRUE, echo=TRUE}
+people <- c("Klaus", "Max", "Jens", "Dieter")
+people
+people == "Max"
+vektorMitBeliebigemNamen != 0
+logischerVektor <- vektorMitBeliebigemNamen <= 3
+logischerVektor
+```
+
+## Eigenschaften von Vektoren
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+**names(a)** gibt die Namen der Einträge des Vektors $a$ zurück:
+
+```{r, eval=TRUE, echo=TRUE}
+weight <- c(67, 80, 72, 90)
+names(weight)
+weight
+```
+Jetzt geben wir den Werten einen Namen:
+```{r}
+names(weight) <- people
+weight
+```
+:::
+::: {.column width="49%"}
+
+Diese Namen werden von **R** sehr oft mit ausgewertet und verwendert:
+
+```{r}
+barplot(weight)
+```
+
+:::
+::::::::::::::
+
+## Rechnen mit Vektoren/ Datenreihen
+
+In Vektoren speichern wir Datenreihen.
+
+**Wichtige** Befehle für Vektoren  sind 
+- $mean()$, $sd()$, $var()$, $min()$, $max()$, $length()$, $sum()$, $median()$, $IQR()$, $summary()$
+- **Zugriff** auf das i-te Element eines Vektors $a$ mit $a[i]$.
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+aVec <- c(1, 2, 4, 9, 16, 25) 
+mean(aVec)
+sd(aVec)
+var(aVec)
+```
+
+:::
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+min(aVec)
+max(aVec)
+length(aVec)
+sum(aVec)
+```
+
+:::
+::::::::::::::
+
+## Rechnen mit Vektoren
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+median(aVec)
+IQR(aVec)
+```
+
+:::
+::: {.column width="49%"}
+
+```{r, eval=TRUE, echo=TRUE}
+quantile(aVec)
+```
+
+:::
+::::::::::::::
+
+```{r, eval=TRUE, echo=TRUE}
+summary(aVec)
+```
+
+```{r}
+library(mosaic)
+favstats(aVec)
+```
