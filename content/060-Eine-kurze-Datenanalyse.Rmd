@@ -76,7 +76,7 @@ bargraph(~size, data=tips)
 ::: {.column width="49%"}
 
 ```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
-histogram(~tip, data=tips)
+histogram( ~ tip, data=tips)
 ```
 
 :::
@@ -156,7 +156,7 @@ bwplot(tip ~ sex | smoker, data=tips,
 ## Streudiagramm mit zwei metrischen Variablen
 
 
-```{r, tidy=TRUE, eval=TRUE, echo=TRUE, fig.height="90%"}
+```{r, eval=TRUE, echo=TRUE}
 xyplot(tip~total_bill, data=tips, 
        ylab="Trinkgeld (in USD)", xlab="Rechnungsbetrag (in USD)", 
        main="Trinkgelder in Abhängigkeit vom Rechnungsbetrag")
@@ -165,7 +165,7 @@ xyplot(tip~total_bill, data=tips,
 ## Streudiagramm mit zwei metrischen Variablen
 
 
-```{r, tidy=TRUE, eval=TRUE, echo=TRUEfig.height="75%"}
+```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
 xyplot(tip~total_bill, data=tips, 
        ylab="Trinkgeld (in USD)", xlab="Rechnungsbetrag (in USD)", 
        main="Trinkgelder in Abhängigkeit vom Rechnungsbetrag", 
