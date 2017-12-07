@@ -130,6 +130,8 @@ df <- data.frame(
 df
 ```
 
+In *RMarkdown*-Skripten möchte man gerne eine schönere Ausgabe haben. Dies geht z.B. mit dem Befehl `kable` aus dem Paket `knitr`:
+
 ```{r}
 library(knitr)
 kable(df)
@@ -158,8 +160,8 @@ mean(filter(df, Geschlecht=="männlich")$Gewicht)
 
 ```{r, tidy=TRUE}
 # BMI der Tabelle hinzufügen:
-df <- mutate(df, BMI = round(Gewicht / Groesse^2,2))
-df
+df <- (mutate(df, 
+      BMI = round(Gewicht / Groesse^2,2)))
 ```
 
 </div>

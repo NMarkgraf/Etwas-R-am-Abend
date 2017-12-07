@@ -30,9 +30,16 @@ library(mosaic) # Hauptsächlich "lattice"
 
 Schauen wir uns die Daten etwas an:
 
-```{r, tidy=TRUE, size='tiny', tidy.opts=list(blank=FALSE, width.cutoff=78)}
+```{r, tidy=TRUE, echo=TRUE, eval=FALSE}
 inspect(tips)
 ```
+```{r, tidy=TRUE, echo=FALSE, size='tiny', tidy.opts=list(blank=FALSE, width.cutoff=180), R.options=list(width=180)}
+txt <- capture.output(inspect(tips))
+```
+\small\ttfamily
+\begin{verbatim}
+`r paste0(stri_wrap(txt, width=180, normalize=FALSE), collapse="\n## ")`
+\end{verbatim}
 
 ## Tischgröße wirklich quantitativ?
 
@@ -48,9 +55,16 @@ levels(tips$size)
 
 Schauen wir uns die Daten erneut an:
 
-```{r, tidy=TRUE, size='tiny', tidy.opts=list(blank=FALSE, width.cutoff=78)}
+```{r, tidy=TRUE, echo=TRUE, eval=FALSE}
 inspect(tips)
 ```
+```{r, tidy=TRUE, echo=FALSE, size='tiny', tidy.opts=list(blank=FALSE, width.cutoff=180), R.options=list(width=180)}
+txt <- capture.output(inspect(tips))
+```
+\small\ttfamily
+\begin{verbatim}
+`r paste0(stri_wrap(txt, width=180, normalize=FALSE), collapse="\n## ")`
+\end{verbatim}
 
 ## Balkendiagramm bei kategorialen Daten
 :::::::::::::: {.columns} 
@@ -102,7 +116,7 @@ histogram( ~ tip | sex,
 :::
 ::: {.column width="49%"}
 
-```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
+```{r, eval=TRUE, echo=TRUE}
 histogram( ~ total_bill | size, 
           data=tips)
 ```
@@ -156,7 +170,7 @@ bwplot(tip ~ sex | smoker, data=tips,
 ## Streudiagramm mit zwei metrischen Variablen
 
 
-```{r, eval=TRUE, echo=TRUE}
+```{r, eval=TRUE, echo=TRUE, out.width="80%"}
 xyplot(tip~total_bill, data=tips, 
        ylab="Trinkgeld (in USD)", xlab="Rechnungsbetrag (in USD)", 
        main="Trinkgelder in Abhängigkeit vom Rechnungsbetrag")
@@ -165,7 +179,7 @@ xyplot(tip~total_bill, data=tips,
 ## Streudiagramm mit zwei metrischen Variablen
 
 
-```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
+```{r, eval=TRUE, echo=TRUE, out.width="67%"}
 xyplot(tip~total_bill, data=tips, 
        ylab="Trinkgeld (in USD)", xlab="Rechnungsbetrag (in USD)", 
        main="Trinkgelder in Abhängigkeit vom Rechnungsbetrag", 
@@ -267,10 +281,16 @@ cor(tip~total_bill, data=tips)
 ## $\chi^2$-Test
 Test der Unabhängigkeit zweier nominalen Variablen mit Hilfe des $\chi^2$-Test:
 
-`r if (knitr:::is_latex_output()) '\n\\smallverb'`
-```{r, tidy=TRUE,}
+```{r, echo=TRUE, eval=FALSE}
 xchisq.test(sex ~ smoker, data=tips)
 ```
+```{r, tidy=TRUE, echo=FALSE, size='tiny', tidy.opts=list(blank=FALSE, width.cutoff=180), R.options=list(width=180)}
+txt <- capture.output(xchisq.test(sex ~ smoker, data=tips))
+```
+\small\ttfamily
+\begin{verbatim}
+`r paste0(stri_wrap(txt, width=180, normalize=FALSE), collapse="\n## ")`
+\end{verbatim}
 
 ## Nullhypotesten-Tests
 
@@ -307,20 +327,20 @@ Bei der Dokumentation von t-Tests ist es wichtig, einseitiges Testen von zweisei
 Bezüglich einer Gruppe (nominale Variable) mit mehr als zwei Levels wird eine metrische Variable getestet.
 
 ```{r, tidy=TRUE,}
-bwplot(tip~day, data=tips)
+bwplot(tip ~ day, data=tips)
 ```
 
 
 ## ANOVA (Varianzanalyse)
 
-```{r, tidy=TRUE,}
-favstats(tip~day, data=tips)
+```{r, echo=TRUE}
+favstats(tip ~ day, data=tips)
 ```
 
 *Forschungshypothese:* Es gibt einen Unterschied beim Trinkgeld bei/zwischen den Tagen.
 
-```{r, tidy=TRUE}
-summary(aov(tip~day, data=tips))
+```{r, echo=TRUE}
+summary(aov(tip ~ day, data=tips))
 ```
 
 
@@ -328,8 +348,8 @@ summary(aov(tip~day, data=tips))
 
 Modellierung einer angängigen Variable (AV) durch eine unabhängige Variable (UV).
 `r if (knitr:::is_latex_output()) '\n\\smallverb'`
-```{r, tidy=TRUE,}
-Mod1<-lm(tip~total_bill, data=tips)
+```{r, echo=TRUE}
+Mod1 <- lm( tip ~ total_bill, data=tips)
 summary(Mod1)
 ```
 

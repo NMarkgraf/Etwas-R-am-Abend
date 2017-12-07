@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 #   fig.keep="none",
     out.width="80%",
 #   cache = TRUE,
-#    tidy=TRUE,wwwwwwww
+#    tidy=TRUE,
     fig.align = "center",
     width.cutoff=60
 )
@@ -22,6 +22,7 @@ library(mosaic)
 library(tidyverse)
 library(formatR)
 library(mosaic)
+library(stringi)
 
 set.seed(2009)
 ```
@@ -50,8 +51,7 @@ set.seed(2009)
 ```{r child = './content/070-R-intern.Rmd'}
 ```
 
-```{r include=FALSE, eval=FALSE}
-# Appendix
+```{r child = './content/A000-Anhang.Rmd'}
 ```
 
 ```{r child = './content/A010-Literatur.Rmd'}
