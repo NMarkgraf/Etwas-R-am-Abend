@@ -84,7 +84,7 @@ endif
 
 .PHONY: clean clean-filterdir clean-tex clean-schleifen clean-folien
 
-clean: clean-schleifen clean-folien
+clean: clean-tex clean-schleifen clean-folien
 
 clean-filterdir:
 	if [ -d "./$(PANDOCFILTERDIR)" ];then	\
@@ -92,6 +92,7 @@ clean-filterdir:
 	fi
 
 clean-tex:
+	$(RMDIR) tex2pdf.*
 	$(RM) $(ALLES:%.pdf=%.tex) texput.log $(ALLES:%.pdf=%.aux) $(ALLES:%.pdf=%.log) $(ALLES:%.pdf=%.nav) $(ALLES:%.pdf=%.out) $(ALLES:%.pdf=%.snm) $(ALLES:%.pdf=%.snm) $(ALLES:%.pdf=%.tex) $(ALLES:%.pdf=%.synctex.gz) $(ALLES:%.pdf=%.toc) $(ALLES:%.pdf=%.vrb)
 	
 clean-schleifen: 
