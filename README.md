@@ -7,6 +7,6 @@ Hier finden Sie die aktuelle Fassung der Präsentation, die ich in Köln gehalte
 
 Sie ist in *RMarkdown* geschrieben und hat einige Anpassungen für die [FOM](http://www.fom.de).
 
-Natürlich wird das *RMarkdown* direkt aus *RStudio* übersetzt! - Das PDF-Dokument im Repository ist genau so entstanden.
+Natürlich wird das *RMarkdown* direkt aus *RStudio* übersetzt! - Das [PDF-Dokument](https://github.com/NMarkgraf/Etwas-R-am-Abend/raw/master/Etwas-R-am-Abend-RELOADED.pdf) im diesem Repository ist genau so entstanden.
 
 N. Markgraf
