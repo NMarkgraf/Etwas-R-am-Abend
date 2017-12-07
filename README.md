@@ -10,3 +10,6 @@ Sie ist in *RMarkdown* geschrieben und hat einige Anpassungen für die [FOM](htt
 Natürlich wird das *RMarkdown* direkt aus *RStudio* übersetzt! - Das [PDF-Dokument](https://github.com/NMarkgraf/Etwas-R-am-Abend/raw/master/Etwas-R-am-Abend-RELOADED.pdf) im diesem Repository ist genau so entstanden.
 
 N. Markgraf
+
+
+WORK IN PROGRESS! - Neue Version vermutlich 8.12.2017!
