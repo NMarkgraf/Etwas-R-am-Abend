@@ -1,6 +1,6 @@
 # Ein paar Schritte in R
 
-## Laden von mosaic und Vorbereiten
+## Vorbereitungen
 
 Wir arbeiten mit **mosaic**. Daher laden wir als erstes (immer) das Paket in den Speicher von R.
 Als zweites setzen wir hier mit `set.seed(2009)` den Zufallszahlengenerator von R auf einen von uns gewählten Startwert; dies dient der Reproduzierbarkeit!
@@ -10,39 +10,98 @@ library(mosaic)
 set.seed(2009)
 ```
 
-## Wir laden ein paar Daten
+Wir wollen nun den Datensatz "miete03" aus dem Netz laden
 
 - Via **RStudio**:
-    Gehen Sie auf das recht obere Fenster und klicken Sie **Import Dataset**, danach **From Web URL** und geben Sie 
-    als URL bitte https://raw.githubusercontent.com/NMarkgraf/Etwas-R-zum-Nachmittag/master/Datasets/miete03.asc oder einfacher 
-    https://tinyurl.com/yblxykf3 ein.
+    Gehen Sie auf das recht obere Fenster, klicken Sie auf *Environment*, Dann klicken Sie **Import Dataset**. Danach **From Text (readr)** und geben Sie als URL bitte https://raw.githubusercontent.com/NMarkgraf/Etwas-R-zum-Nachmittag/master/Datasets/miete03.asc oder einfacher 
+    https://tinyurl.com/yblxykf3 ein drücken Sie auf **Update**. Stellen Sie dann den **Delimiter** auf **Tab** (und warten oder drücken nochmal auf **Update**). Mit **Import** wird dann der Datensatz geladen.
     
-    Beachten 
     
 - Via **R** direkt:
-  Man kann auch direkt aus **R** mittels ein paar Zeilen die Daten laden!
-  Laden wir ein paar Demodaten aus dem Netz:
-```{r, eval=TRUE, echo=TRUE}
+  Man kann auch direkt aus **R** mittels ein paar Zeilen die Daten laden:
+
+```{r, eval=FALSE, echo=TRUE}
 miete03 <- read.table(file = "https://tinyurl.com/yblxykf3", header = TRUE)
 ```
 
+## Unterschiede der beiden Wege
 
-## Die ersten/ letzten Zeilen der Tabelle ansehen
+Falls Sie die Daten via RStudio-Oberfläche geladen haben (oder mittels des im *Code preview*) angegebenen Codes, werden sogenannte `tibbles` statt `data.frames` geladen. 
 
-Mit dem Befehl **head()** schaut man sich die ersten Zeilen (im Bsp. die ersten 3 Zeilen) eines *Dataframes* an:
-```{r,  eval=TRUE, echo=TRUE}
-head(miete03, 3)
+**Tibbles** sind eine Weiterentwicklung der klassischen `data.frames`. Sie erkennen den Unterschied z.B. in dem Sie sich die ersten Zeilen ansehen.
+
+Bei einem **Tibble** sieht die ersten Zeilen wie folgt aus:
+```{r, eval=TRUE, echo=FALSE, warning=FALSE}
+library(readr)
+miete03 <- read_delim("https://tinyurl.com/yblxykf3", 
+    "\t", escape_double = FALSE, trim_ws = TRUE)
 ```
-Mit dem Befehl **tail()** schaut man sich die ersten Zeilen (im Bsp. die letzen 2 Zeilen) eines *Dataframes* an:
-```{r,  eval=TRUE, echo=TRUE}
-tail(miete03, 2)
+```{r}
+head(miete03, 2)
 ```
+
+##
+
+Bei einem Datenrahmen (`data.frame`) dagegen:
+```{r, eval=FALSE, echo=TRUE}
+miete03 <- read.table(file = "https://tinyurl.com/yblxykf3", header = TRUE)
+```
+```{r}
+head(miete03, 2)
+```
+
+Mit dem Befehl:
+```{r}
+miete03 <- as.data.frame(miete03)
+```
+
+wandeln wir, falls gewünscht, **tibbles** in klassische `data.frames` um.
+
+## Was beschreibt der Datensatz?
+
+Zahlreiche deutsche Städte erstellen sogenannte Mietspiegel, um Mietern, Vermietern, Mietberatungsstellen und Sachverständigen eine
+möglichst objektive Entscheidungshilfe in Mietfragen zur Verfügung zu stellen. 
+Die Mietspiegel werden dabei insbesondere zur Ermittlung der ”ortsüblichen Vergleichsmiete” (Nettomiete in Abhängigkeit von Wohnungsgröße, -ausstattung, -alter, etc.) herangezogen. 
+Bei der Erstellung von Mietspiegeln wird aus der Gesamtheit aller in Frage kommenden Wohnungen eine repräsentative Zufallsstichprobe gezogen (im Fall der Stadt München durch Infratest), und die interessierenden Daten werden von Interviewern anhand von Fragebögen ermittelt. 
+
+Der vorliegende Datensatz stellt einen Ausschnitt aus dem Mietspiegel München des Jahres 2003 dar und enthält die Daten von 2053
+Wohnungen.
+
+Schauen wir uns die Spaltenüberschriften einmal kurz an:
+
+```{r}
+names(miete03)
+```
+
 
 ## Der Befehl `inspect()`
 
 
 ```{r}
 inspect(miete03)
+```
+
+
+## Quiz: Sind die Daten plausiebel?
+
+Schauen Sie sich die Daten und die Spaltenbezeichner an, sind die von R gewählten Datentypen (numeric und integer) wirklich immer passend?
+
+Falls nein, wo würden Sie gerne warum was ändern?
+
+
+## Anpassen des Datensatzes
+
+```{r}
+miete03$badextra <- as.factor(miete03$badextra)   # Extra Bad
+miete03$badkach0 <- as.factor(miete03$badkach0)   # Bad gekachelt
+miete03$bez <- as.factor(miete03$bez)             #
+miete03$kueche <- as.factor(miete03$kueche)       # Küche
+miete03$wohnbest <- as.factor(miete03$wohnbest)   # 
+miete03$wohngut <- as.factor(miete03$wohngut)     #
+miete03$ww0 <- as.factor(miete03$ww0)             # Warmwasser
+miete03$zh0 <- as.factor(miete03$zh0)             # Zentralheizung
+levels(miete03$zh0) <- c("ja", "nein")
+miete03$rooms <- as.factor(miete03$rooms)         # Anzahl der Zimmer
 ```
 
 ## Häufigkeitstabelle und Balkendiagramme
@@ -74,12 +133,51 @@ options(digits=6)
 :::
 ::::::::::::::
 
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
+Relative Häufigkeitstabelle in Prozent
+```{r}
+options(digits=2)
+tally( ~ rooms, data=miete03, 
+       format="percent")
+```
+```{r echo=FALSE}
+options(digits=6)
+```
+
+:::
+::: {.column width="49%"}
+
+```{r}
+tally( zh0 ~ rooms, data=miete03, 
+       format="count")
+```
+
+:::
+::::::::::::::
+
 ## Häufigkeitstabelle und Balkendiagramme
 
 Und mit dem Befehl **bargraph()** erstellen wir ein Balkendiagramm daraus:
+
+:::::::::::::: {.columns} 
+::: {.column width="49%"}
+
 ```{r,  eval=TRUE, echo=TRUE, tidy=TRUE}
 bargraph( ~ rooms, data= miete03 )
+#
 ```
+
+:::
+::: {.column width="49%"}
+
+```{r,  eval=TRUE, echo=TRUE, tidy=TRUE}
+bargraph( ~ rooms, data= miete03, 
+          type="percent" )
+```
+:::
+::::::::::::::
 
 ## Schönere Diagramme mit **ggplot2** und **qplot()**
 
@@ -90,7 +188,7 @@ Mit dem Paket `ggplot2` und der Funktion `qplot()` würden sich auch schöne Gra
 :::::::::::::: {.columns} 
 ::: {.column width="49%"}
 
-```{r, eval=TRUE, echo=TRUE}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE}
 library(ggplot2)
 qplot(miete03$rooms, bins=12,
       xlab="Zimmer", ylab="Häufigkeit")
@@ -100,7 +198,7 @@ qplot(miete03$rooms, bins=12,
 :::
 ::: {.column width="49%"}
 
-```{r, eval=TRUE, echo=TRUE}
+```{r, eval=TRUE, echo=TRUE, warning=FALSE}
 library(ggplot2)
 ggplot(miete03, aes( x = rooms)) + 
     geom_bar() + xlab("Zimmer") + 
@@ -119,3 +217,29 @@ Wie man mit **ggplot2** noch mehr und noch schönere Grafiken erstellt, können 
 - http://www.cookbook-r.com/Graphs/
 - https://www.datacamp.com/courses/data-visualization-with-ggplot2-1
 - http://r4ds.had.co.nz
+
+
+## Die Nettokaltmiete
+
+Automatische Klassenanzahl:
+```{r}
+histogram( ~ nm, data=miete03)
+```
+
+## Die Nettokaltmiete
+
+Vorgegebene Klassenanzahl von 8 (wird ungefähr eingehalten):
+```{r}
+histogram( ~ nm, data=miete03, nint=8)
+```
+
+## Die Nettokaltmiete
+
+```{r}
+histogram( ~ nm, data=miete03, type="percent", 
+           breaks=c(0, 300, 600, 900, 1200, 1500, 1800), 
+           main="Nettokaltmiete in München 2003", 
+           sub="Stichprobe vom Umfang n=2053",
+           xlab="Nettokaltmiete in Euro")
+```
+
