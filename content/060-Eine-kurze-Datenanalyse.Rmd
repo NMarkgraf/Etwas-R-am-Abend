@@ -21,9 +21,9 @@ tips <- read.csv2("tips.csv")
 
 ```
 
-Darüberhinaus nutzen wir einige Befehle aus der Paketsammlung **Mosaic**, welches wir dazu laden
+Darüberhinaus nutzen wir das Paket **mosaic**. Daher laden wir es mit:
 ```{r}
-library(mosaic) # Hauptsächlich "lattice"
+library(mosaic)
 ```
 
 ## Daten ansehen
@@ -149,19 +149,19 @@ bwplot(total_bill ~ size, data=tips)
 :::::::::::::: {.columns} 
 ::: {.column width="49%"}
 
-```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
+```{r, eval=TRUE, echo=TRUE}
 bwplot(tip ~ sex | smoker, 
-       data=tips)
+       data = tips)
 #
 ```
 
 :::
 ::: {.column width="49%"}
 
-```{r, tidy=TRUE, eval=TRUE, echo=TRUE}
-bwplot(tip ~ sex | smoker, data=tips, 
-    main="Trinkgeld nach Rauchern und Geschlecht", 
-    ylab="Trinkgeld")
+```{r, eval=TRUE, echo=TRUE}
+bwplot(tip ~ sex | smoker, data = tips, 
+    main = "Trinkgeld nach Rauchern und Geschlecht", 
+    ylab = "Trinkgeld")
 ```
 
 :::
@@ -170,7 +170,7 @@ bwplot(tip ~ sex | smoker, data=tips,
 ## Streudiagramm mit zwei metrischen Variablen
 
 
-```{r, eval=TRUE, echo=TRUE, out.width="80%"}
+```{r, eval=TRUE, echo=TRUE, out.width="75%"}
 xyplot(tip~total_bill, data=tips, 
        ylab="Trinkgeld (in USD)", xlab="Rechnungsbetrag (in USD)", 
        main="Trinkgelder in Abhängigkeit vom Rechnungsbetrag")
@@ -179,12 +179,12 @@ xyplot(tip~total_bill, data=tips,
 ## Streudiagramm mit zwei metrischen Variablen
 
 
-```{r, eval=TRUE, echo=TRUE, out.width="67%"}
+```{r, eval=TRUE, echo=TRUE, out.width="65%"}
 xyplot(tip~total_bill, data=tips, 
        ylab="Trinkgeld (in USD)", xlab="Rechnungsbetrag (in USD)", 
        main="Trinkgelder in Abhängigkeit vom Rechnungsbetrag", 
        sub="Daten gruppiert nach dem Geschlecht", 
-       groups=sex, auto.key = T)
+       groups=sex, auto.key = TRUE)
 ```
 
 ## Häufigkeitstabellen zwei kategorialen Variablen
@@ -255,7 +255,7 @@ mosaicplot(tab)
 
 ## Korrelationsplot mit metrischen Variablen
 
-```{r, tidy=TRUE}
+```{r, tidy=TRUE, out.width="90%"}
 # ggf:  install.packages("corrgram", dependencies=T)
 library(corrgram)
 corrgram(tips)
@@ -287,7 +287,7 @@ xchisq.test(sex ~ smoker, data=tips)
 ```{r, tidy=TRUE, echo=FALSE, size='tiny', tidy.opts=list(blank=FALSE, width.cutoff=180), R.options=list(width=180)}
 txt <- capture.output(xchisq.test(sex ~ smoker, data=tips))
 ```
-\small\ttfamily
+\footnotesize\ttfamily
 \begin{verbatim}
 `r paste0(stri_wrap(txt, width=180, normalize=FALSE), collapse="\n## ")`
 \end{verbatim}
@@ -326,7 +326,7 @@ Bei der Dokumentation von t-Tests ist es wichtig, einseitiges Testen von zweisei
 
 Bezüglich einer Gruppe (nominale Variable) mit mehr als zwei Levels wird eine metrische Variable getestet.
 
-```{r, tidy=TRUE,}
+```{r, tidy=TRUE, out.width="90%"}
 bwplot(tip ~ day, data=tips)
 ```
 

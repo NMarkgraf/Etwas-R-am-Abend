@@ -1,8 +1,8 @@
 ---
 title: "Etwas R am Abend"
 author: "Norman Markgraf"
-date: "06.12.2017"
-institute: Standort Köln
+date: "06.12.2017 akt. Fassung"
+institute: "Standort Köln"
 ---
 
 ```{r setup, include=FALSE}

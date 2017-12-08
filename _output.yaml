@@ -1,4 +1,5 @@
 beamer_presentation:
+  template: NULL
   toc: no
   md_extensions: +raw_tex+header_attributes
   fig_caption: no
@@ -28,6 +29,7 @@ beamer_presentation:
     - --filter
     - pandoc-filter/typography.py
 beamer_presentation_loop:
+  template: NULL
   toc: no
   md_extensions: +raw_tex+header_attributes
   fig_caption: no

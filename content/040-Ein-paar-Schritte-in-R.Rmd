@@ -31,7 +31,7 @@ Falls Sie die Daten via RStudio-Oberfläche geladen haben (oder mittels des im *
 **Tibbles** sind eine Weiterentwicklung der klassischen `data.frames`. Sie erkennen den Unterschied z.B. in dem Sie sich die ersten Zeilen ansehen.
 
 Bei einem **Tibble** sieht die ersten Zeilen wie folgt aus:
-```{r, eval=TRUE, echo=FALSE, warning=FALSE}
+```{r, eval=TRUE, echo=FALSE, warning=FALSE, include=FALSE}
 library(readr)
 miete03 <- read_delim("https://tinyurl.com/yblxykf3", 
     "\t", escape_double = FALSE, trim_ws = TRUE)
@@ -43,7 +43,7 @@ head(miete03, 2)
 ##
 
 Bei einem Datenrahmen (`data.frame`) dagegen:
-```{r, eval=FALSE, echo=TRUE}
+```{r, eval=TRUE, echo=FALSE}
 miete03 <- read.table(file = "https://tinyurl.com/yblxykf3", header = TRUE)
 ```
 ```{r}
@@ -76,26 +76,37 @@ names(miete03)
 
 ## Der Befehl `inspect()`
 
-
-```{r}
+```{r, tidy=TRUE, echo=TRUE, eval=FALSE}
 inspect(miete03)
 ```
+```{r, tidy=TRUE, echo=FALSE, size='tiny', tidy.opts=list(blank=FALSE, width.cutoff=180), R.options=list(width=180)}
+txt <- capture.output(inspect(miete03))
+```
+\footnotesize\ttfamily
+\begin{verbatim}
+`r paste0(stri_wrap(txt, width=180, normalize=FALSE), collapse="\n## ")`
+\end{verbatim}
 
 
-## Quiz: Sind die Daten plausiebel?
+## Quiz: Sind die Daten plausibel?
 
 Schauen Sie sich die Daten und die Spaltenbezeichner an, sind die von R gewählten Datentypen (numeric und integer) wirklich immer passend?
 
 Falls nein, wo würden Sie gerne warum was ändern?
 
+Können Sie sich vorstellen, was hinter den Abkürzungen in den Spalten für Begriffe stecken?
+
 
 ## Anpassen des Datensatzes
 
+Ein paar der *Codierungen* kann man leicht erkennen und sinnvoll umwandeln:
+
 ```{r}
 miete03$badextra <- as.factor(miete03$badextra)   # Extra Bad
-miete03$badkach0 <- as.factor(miete03$badkach0)   # Bad gekachelt
+miete03$badkach0 <- as.factor(miete03$badkach0)   # Bad gekachelt?
 miete03$bez <- as.factor(miete03$bez)             #
 miete03$kueche <- as.factor(miete03$kueche)       # Küche
+levels(miete03$kueche) <- c("ja", "nein")
 miete03$wohnbest <- as.factor(miete03$wohnbest)   # 
 miete03$wohngut <- as.factor(miete03$wohngut)     #
 miete03$ww0 <- as.factor(miete03$ww0)             # Warmwasser
@@ -105,6 +116,8 @@ miete03$rooms <- as.factor(miete03$rooms)         # Anzahl der Zimmer
 ```
 
 ## Häufigkeitstabelle und Balkendiagramme
+
+Um den Bestand etwas zu sichten schauen wir uns zunächst an, wie die Zimmeranzahl in der Stichprobe verteilt ist.
 
 Mit dem Befehl **tally** können wir *Häufigkeitstabellen* erstellen:
 
@@ -159,22 +172,24 @@ tally( zh0 ~ rooms, data=miete03,
 
 ## Häufigkeitstabelle und Balkendiagramme
 
-Und mit dem Befehl **bargraph()** erstellen wir ein Balkendiagramm daraus:
+Zahlen lassen sich visualisieren. Zum Beispiel die Häufigkeiten mit Hilfe von Säulen-/ Balkendiagrammen.
+
+Mit dem Befehl **bargraph()** erstellen wir ein Balkendiagramm:
 
 :::::::::::::: {.columns} 
 ::: {.column width="49%"}
 
 ```{r,  eval=TRUE, echo=TRUE, tidy=TRUE}
-bargraph( ~ rooms, data= miete03 )
+bargraph( ~ rooms, data = miete03)
 #
 ```
 
 :::
 ::: {.column width="49%"}
 
-```{r,  eval=TRUE, echo=TRUE, tidy=TRUE}
-bargraph( ~ rooms, data= miete03, 
-          type="percent" )
+```{r,  eval=TRUE, echo=TRUE}
+bargraph( ~ rooms, data = miete03, 
+          type = "percent" )
 ```
 :::
 ::::::::::::::
@@ -192,7 +207,7 @@ Mit dem Paket `ggplot2` und der Funktion `qplot()` würden sich auch schöne Gra
 library(ggplot2)
 qplot(miete03$rooms, bins=12,
       xlab="Zimmer", ylab="Häufigkeit")
-
+#
 ```
 
 :::
@@ -235,11 +250,10 @@ histogram( ~ nm, data=miete03, nint=8)
 
 ## Die Nettokaltmiete
 
-```{r}
+```{r out.width="55%"}
 histogram( ~ nm, data=miete03, type="percent", 
            breaks=c(0, 300, 600, 900, 1200, 1500, 1800), 
            main="Nettokaltmiete in München 2003", 
            sub="Stichprobe vom Umfang n=2053",
            xlab="Nettokaltmiete in Euro")
 ```
-
