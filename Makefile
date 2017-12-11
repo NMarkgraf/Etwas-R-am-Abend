@@ -74,7 +74,7 @@ update: update-filter
 
 update-filter: 	
 	cd $(PANDOCFILTERDIR)
-	$(GIT) checkout master
+	$(GIT) pull
 ifneq ($(detected_OS),Windows)
 		chmod a+x $(PANDOCFILTERDIR)/*.py
 endif

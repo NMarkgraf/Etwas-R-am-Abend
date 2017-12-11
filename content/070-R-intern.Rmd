@@ -34,7 +34,7 @@ Um gleichzeitig weitere, notwendige Pakete zu installieren nutzt man die Option 
 install.packages("ggplot2", dependencies=TRUE)
 ```
 
-Es gibt aber noch andere Wege! (Direkt in RStudio z.B.!)
+Es gibt aber noch andere Wege! (Direkt in RStudio z. B.!)
 
 **Aktualisieren von (allen) Paketen:**
 

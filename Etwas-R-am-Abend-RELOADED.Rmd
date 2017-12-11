@@ -9,7 +9,7 @@ institute: "Standort Köln"
 library(knitr)
 knitr::opts_chunk$set(
     echo = TRUE,
-    background='#E0E0E0',
+    background='#B0B0B0',
 #   fig.keep="none",
     out.width="80%",
 #   cache = TRUE,

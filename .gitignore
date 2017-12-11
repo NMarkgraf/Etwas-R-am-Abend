@@ -12,3 +12,14 @@ private-Vorstellung.Rmd
 local_backup
 .DS_Store
 Vorlesungstermine/*.png
+Etwas-R-am-Abend-RELOADED.nav
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+Etwas*.tex
+*.toc
+*.vrb
+content/*.csv
