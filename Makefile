@@ -36,7 +36,7 @@ REPOURL = "https://github.com/NMarkgraf/typography.py.git"
 
 SCHLEIFEN  = Schleife.pdf 
 
-FOLIEN  = Etwas-R-am-Abend-RELOADED.pdf 
+FOLIEN  = Etwas-R-am-Abend.pdf 
 
 ALLES = $(FOLIEN) $(SCHLEIFEN)
 

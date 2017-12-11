@@ -4,7 +4,7 @@ beamer_presentation:
   md_extensions: +raw_tex+header_attributes
   fig_caption: no
   highlight: tango
-  keep_tex: yes
+  keep_tex: no
   slide_level: 2
   includes:
     in_header: header.tex
